@@ -40,5 +40,5 @@ public class DemoProperties {
     private String one;
     private String two;
     private String three;
-    private List<String> excludUrls;
+    private List<String> excludUrls;   //excludUrlStrs
 }

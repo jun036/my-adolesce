@@ -180,6 +180,13 @@ public class LoginService {
                 captcha.createCode();
                 break;
             }
+            //动图
+            case HUTOOL_GIF:{
+                captcha = CaptchaUtil.createGifCaptcha(200,100,4);
+                captcha.setGenerator(new MathGenerator());
+                captcha.createCode();
+                break;
+            }
             default:
                 break;
         }

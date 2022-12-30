@@ -46,20 +46,38 @@ feign:
   hystrix:
     enabled: true
   # 配置feign调用日志级别
-  client:
-    config:
-      httpclient:
-        enabled: true # 开启feign对HttpClient的支持
-        max-connections: 200 # 最大的连接数
-        max-connections-per-route: 50 # 每个路径的最大连接数
+#  client:
+#    config:
 #      default: # default是针对全局服务，也可配置针对某个微服务
 #        loggerLevel: FULL #  日志级别
+  # 开启feign对HttpClient的支持
+  httpclient:
+    enabled: true
+    max-connections: 200 # 最大的连接数
+    max-connections-per-route: 50 # 每个路径的最大连接数
 
-# 设置Hystrix超时时间（到达该时间服务提供方仍未响应，则走服务降级逻辑）【合理的时间应该设置为 重试次数*ribbon.ReadTimeout，以保证ribbon重试次数都能够执行完】
+
 hystrix:
   command:
     default:
+      fallback:
+        enabled: true # 是否启用降级处理，如果启用了，则在超时或异常时进行降级处理，默认开启。
+      circuitBreaker:
+        enabled: true #是否开启熔断机制，默认为true
+        forceOpen: false #强制开启熔断，默认为false。
+        forceClosed: false #强制关闭熔断，默认为false。
+        sleepWindowInMilliseconds: 5000 # 重要！！！熔断窗口时间，默认为5s
+        requestVolumeThreshold: 20 #重要！！！当在配置时间窗口内达到此数量后的失败，进行短路。默认20个
+        errorThresholdPercentage: 50 #重要！！！出错百分比阈值，当达到此阈值后，开始短路。默认50%
       execution:
+        timeout:
+          enabled: true #是否开启超时检测，默认true（开启）
         isolation:
+          #信号量最大并发度 默认值10，如果达到最大并发请求数，请求会被拒绝，该设置只有当strategy设置为SEMAPHORE时才有效
+          semaphore:
+            maxConcurrentRequests: 10
+          strategy: THREAD #SEMAPHORE
           thread:
-            timeoutInMilliseconds: 2000
+            # 设置Hystrix超时时间（到达该时间服务提供方仍未响应，则走服务降级逻辑）【合理的时间应该设置为 调用次数*ribbon.ReadTimeout，以保证ribbon重试次数都能够执行完】
+            timeoutInMilliseconds: 2000 #重要！！！
+            interruptOnTimeout: true #超时线程是否中断 默认值true

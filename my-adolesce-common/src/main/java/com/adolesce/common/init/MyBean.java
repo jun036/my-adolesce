@@ -1,14 +1,19 @@
 package com.adolesce.common.init;
 
+import com.adolesce.common.config.WebMvcConfig;
+import com.adolesce.common.intercepter.TokenInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 
 /**
  * @author Administrator
@@ -16,8 +21,17 @@ import javax.annotation.PreDestroy;
  * @description: TODO
  * @date 2022/5/29 21:38
  */
-@Component
+@Service
 public class MyBean implements BeanNameAware, BeanFactoryAware, ApplicationContextAware, BeanPostProcessor, InitializingBean, DisposableBean {
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private MyApplicationContextAware aware;
+    @Autowired
+    private WebMvcConfig webMvcConfig;
+    @Resource
+    private TokenInterceptor tokenInterceptor;
+
     @PostConstruct  //init-method
     public void myinit() {
         System.err.println("2.4、通过@PostConstruct初始化执行....");
@@ -70,21 +84,21 @@ public class MyBean implements BeanNameAware, BeanFactoryAware, ApplicationConte
      * BeanPostProcessor
      * 初始化预处理:被用作Bean内容修改，并且由于这个是在Bean初始化结束的时候调用的这个方法，也可以被用于内存或缓存技术。
      */
-    /*@Override
+    @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.err.println("....通过BeanPostProcessor Before初始化执行....  bean:" + bean + ",beanName:" + beanName);
+        //System.err.println("....通过BeanPostProcessor Before初始化执行....  bean:" + bean + ",beanName:" + beanName);
         return bean;
-    }*/
+    }
 
     /**
      * BeanPostProcessor
      * 初始化预处理:被用作Bean内容修改，并且由于这个是在Bean初始化结束的时候调用的这个方法，也可以被用于内存或缓存技术。
      */
-    /*@Override
+    @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.err.println("....通过BeanPostProcessor After初始化执行....  bean:" + bean + ",beanName:" + beanName);
+        //System.err.println("....通过BeanPostProcessor After初始化执行....  bean:" + bean + ",beanName:" + beanName);
         return bean;
-    }*/
+    }
 
     @PreDestroy  //destroy-method
     public void mydestory() {

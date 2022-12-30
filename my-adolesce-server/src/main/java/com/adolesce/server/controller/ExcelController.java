@@ -103,7 +103,7 @@ public class ExcelController {
 
 
     /**
-     * 大量数据导入方式一（用户模式读取，只适合导入15W以内的excel）
+     * 大量数据导入方式一（poi 用户模式读取，只适合导入15W以内的excel）
      *
      * @param file
      */
@@ -117,7 +117,7 @@ public class ExcelController {
     }
 
     /**
-     * 大量数据导入方式二(sax 事件驱动模式读取)
+     * 大量数据导入方式二(poi sax 事件驱动模式读取，百万级)
      *
      * @param file
      */
@@ -134,7 +134,7 @@ public class ExcelController {
     }
 
     /**
-     * 大量数据导入方式三（easyExcel方式读取）
+     * 大量数据导入方式三（easyExcel方式读取，百万级）
      *
      * @param file
      */

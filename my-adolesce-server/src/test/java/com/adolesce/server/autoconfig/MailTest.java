@@ -25,7 +25,6 @@ import java.util.*;
  *          如果待发送的邮件地址列表中存在一个无效的地址【该地址是一个合法的邮件地址，但是是无效地址，如：BingDwenDwen@163.com，它是一个合法的邮件地址，但却是无效的地址】，则会导致所有邮件发送失败。
  *      2）、日志没有报任何异常返回发送成功，收件方却没有实际收到邮件
  *          可以登录的你的发送账号，查看邮件系统退信原因。试着检查你公司的企业邮箱服务器的反垃圾邮件规则是否拦截了该邮件。
- *      3）、
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -163,6 +162,40 @@ public class MailTest {
 
         MailSendParams sendParams = MailSendParams.builder().subject("FreemarkerMail 邮件模板 邮件主题")
                 .text(out.toString()).to(to).cc(bcc)
+                .bcc(bcc).replyTo(bcc[0]).inlinePaths(inLineMap)
+                .attachmentPaths(attachmentPaths)
+                .sentDate(new Date())
+                .build();
+
+        this.mailTemplate.sendMail(sendParams);
+    }
+
+    @Test
+    public void sendMailForThymleaf(){
+        String[] to = {"liuweinan0008@163.com"};
+        String[] bcc = {"363426466@qq.com"};
+        //指定模板名称，文件后缀携带与否都没关系，不携带路径，以配置文件中的路径为准，携带路径，以当前类为准
+        //String templateName = "holiday-thymleaf.html";
+        String templateName = "html/holiday-thymleaf";
+
+        //模板参数
+        Context context = new Context();
+        context.setVariable("festival", "春节");
+        context.setVariable("date", "2022-01-01");
+
+        String text = templateEngine.process(templateName, context);
+
+        //静态资源
+        Map<String, String> inLineMap = new HashMap<String, String>();
+        inLineMap.put("aa", "D://some-test-file/pic/hourse1.jpg");
+
+        //附件
+        List<String> attachmentPaths = new ArrayList<>();
+        attachmentPaths.add("D://some-test-file/pic/1.zip");
+        attachmentPaths.add("D://some-test-file/pic/hourse2.jpg");
+
+        MailSendParams sendParams = MailSendParams.builder().subject("ThymleafMail 邮件模板 邮件主题")
+                .text(text).to(to).cc(bcc)
                 .bcc(bcc).replyTo(bcc[0]).inlinePaths(inLineMap)
                 .attachmentPaths(attachmentPaths)
                 .sentDate(new Date())

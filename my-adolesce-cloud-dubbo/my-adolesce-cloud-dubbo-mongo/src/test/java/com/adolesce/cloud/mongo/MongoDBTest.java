@@ -118,7 +118,6 @@ public class MongoDBTest {
         );
         DeleteResult deleteResult = this.mongoTemplate.remove(query, MyUser.class);*/
 
-
         //根据条件删除并返回被删除结果集
         Query query = Query.query(Criteria.where("address.street").is("三叉路"));
         List<MyUser> users = this.mongoTemplate.findAllAndRemove(query, MyUser.class, "my_user");
@@ -258,6 +257,7 @@ public class MongoDBTest {
         criteria.orOperator(Criteria.where("age").is(12), Criteria.where("userName").is("ly"));
         Query query = Query.query(criteria);
         //相当于：where age = 35 or userName = '张三'
+
 
         //构建Query对象同时构建Criteria对象
         query = Query.query(Criteria.where("userName").is("lwd")

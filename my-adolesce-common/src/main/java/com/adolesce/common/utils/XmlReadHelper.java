@@ -20,15 +20,6 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.util.*;
 
-/**
- * <b>Application name：</b> ReadConfig.java <br>
- * <b>Application describing： </b> <br>
- * <b>Copyright：</b> Copyright &copy; 2019 明医众禾科技（北京）有限责任公司 版权所有。<br>
- * <b>Company：</b> 明医众禾科技（北京）有限责任公司 <br>
- * <b>Date：</b> 2019年08月29日 10:42 <br>
- * <b>@author：</b> <area href="mailto:liuWeidong@miyzh.com"> 刘威东 </area> <br>
- * <b>@version：</b>V1.0.0 <br>
- */
 @Slf4j
 public class XmlReadHelper {
     private static Map<String, List<ExcelSheet>> excelExportConfigMap = new HashMap<>();

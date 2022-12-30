@@ -207,7 +207,7 @@ public class AliyunGreenTemplate {
         if (httpResponse != null && httpResponse.isSuccess()) {
             JSONObject scrResponse = JSON.parseObject(org.apache.commons.codec.binary.StringUtils.newStringUtf8(httpResponse.getHttpContent()));
             log.info("图片检测结果：{}", JSON.toJSONString(scrResponse, true));
-            System.out.println(JSON.toJSONString(scrResponse, true));
+            //System.out.println(JSON.toJSONString(scrResponse, true));
             int requestCode = scrResponse.getIntValue("code");
             //每一张图片的检测结果
             JSONArray taskResults = scrResponse.getJSONArray("data");

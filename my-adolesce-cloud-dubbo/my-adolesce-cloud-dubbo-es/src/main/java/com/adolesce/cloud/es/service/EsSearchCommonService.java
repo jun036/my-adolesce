@@ -169,11 +169,11 @@ public class EsSearchCommonService {
             Map<String, HighlightField> map = hit.getHighlightFields();
             if (CollUtil.isNotEmpty(map)) {
                 // 2）根据字段名，获取高亮结果
-                map.forEach((fieldName, highlightField) -> {
+                map.forEach((k, v) -> {
                     try {
-                        Field field = mclass.getDeclaredField(fieldName);
+                        Field field = mclass.getDeclaredField(k);
                         field.setAccessible(true);
-                        field.set(object, highlightField.getFragments()[0].toString());
+                        field.set(object, v.getFragments()[0].toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

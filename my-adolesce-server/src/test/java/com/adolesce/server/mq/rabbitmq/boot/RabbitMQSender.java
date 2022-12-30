@@ -135,7 +135,7 @@ public class RabbitMQSender {
             // 重发消息
         });
         // 3.发送消息
-        rabbitTemplate.convertAndSend("boot-log-direct-exchange", "info", message, correlationData);
+        rabbitTemplate.convertAndSend("boot-log-direct-exchange", "info11111", message, correlationData);
     }
 
     /**
@@ -161,14 +161,24 @@ public class RabbitMQSender {
                 .build();
         rabbitTemplate.convertAndSend("ttl.direct", "ttl",message);*/
 
-        // 1.发送消息
-        rabbitTemplate.convertAndSend("ttl.direct", "ttl", "hello, ttl messsage", message -> {
+        // 1.发送一条延时长的消息
+        rabbitTemplate.convertAndSend("ttl.direct", "ttl", "hello, ttl messsage 111", message -> {
+            MessageProperties messageProperties = message.getMessageProperties();
+            messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            //设置消息存活时间为5秒
+            messageProperties.setExpiration("20000");
+            return message;
+        });
+
+        // 2.发送一条延时短的消息
+        rabbitTemplate.convertAndSend("ttl.direct", "ttl", "hello, ttl messsage 222", message -> {
             MessageProperties messageProperties = message.getMessageProperties();
             messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
             //设置消息存活时间为5秒
             messageProperties.setExpiration("5000");
             return message;
         });
+
         // 2.记录日志
         log.info("延时消息已经成功发送！");
     }
@@ -185,14 +195,24 @@ public class RabbitMQSender {
                 .build();
         rabbitTemplate.convertAndSend("delay.direct", "delay",message);*/
 
-        // 1.发送消息
-        rabbitTemplate.convertAndSend("delay.direct", "delay", "hello, delay messsage", message -> {
+        // 1.发送一条延时长的消息
+        rabbitTemplate.convertAndSend("delay.direct", "delay", "hello, delay messsage 111", message -> {
             MessageProperties messageProperties = message.getMessageProperties();
             messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
             //设置消息存活时间为7秒
-            messageProperties.setHeader("x-delay",7000);
+            messageProperties.setHeader("x-delay",20000);
             return message;
         });
+
+        // 2.发送一条延时短的消息
+        rabbitTemplate.convertAndSend("delay.direct", "delay", "hello, delay messsage 222", message -> {
+            MessageProperties messageProperties = message.getMessageProperties();
+            messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            //设置消息存活时间为7秒
+            messageProperties.setHeader("x-delay",5000);
+            return message;
+        });
+
         // 2.记录日志
         log.info("延时消息已经成功发送！");
     }

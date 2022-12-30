@@ -3,6 +3,7 @@ package com.adolesce.common.init;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -33,12 +34,17 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class MyApplicationContextInitializer implements ApplicationContextInitializer {
+public class MyApplicationContextInitializer implements ApplicationContextInitializer, Ordered {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;//nohave
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        System.err.println("1、通过ApplicationContextInitializer初始化执行....");
+        System.err.println("1、通过ApplicationContextInitializer1初始化执行....");
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 }

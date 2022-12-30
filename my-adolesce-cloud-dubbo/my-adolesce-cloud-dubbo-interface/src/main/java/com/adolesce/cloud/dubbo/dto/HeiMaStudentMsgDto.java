@@ -1,8 +1,10 @@
 package com.adolesce.cloud.dubbo.dto;
 
 import com.adolesce.cloud.dubbo.domain.db.HeiMaStudentMsg;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Administrator
@@ -12,6 +14,8 @@ import lombok.Data;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HeiMaStudentMsgDto extends HeiMaStudentMsg {
     private static final long serialVersionUID = 1L;
     /**
@@ -44,8 +48,4 @@ public class HeiMaStudentMsgDto extends HeiMaStudentMsg {
      */
     private Integer endSalary;
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

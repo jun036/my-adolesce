@@ -258,7 +258,7 @@ public class MybatisTest {
     public void ManyToOne(){
         Map<String,Object> params = new HashMap<>();
         params.put("id",1L);
-        List<BatisAddress> addresses = this.usersMapper.selectBatisAddressByParams(null);
+        List<BatisAddress> addresses = this.usersMapper.selectBatisAddressByParams(params);
         addresses.stream().forEach(System.err::println);
     }
 

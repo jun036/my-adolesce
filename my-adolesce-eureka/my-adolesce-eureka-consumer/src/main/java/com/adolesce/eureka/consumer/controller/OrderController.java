@@ -25,7 +25,7 @@ public class OrderController {
     private RestTemplate restTemplate;
     @Autowired
     private DiscoveryClient discoveryClient;
-    @Autowired
+    @Autowired(required = false)
     private GoodsFeignClient goodsFeignClient;
 
     /**

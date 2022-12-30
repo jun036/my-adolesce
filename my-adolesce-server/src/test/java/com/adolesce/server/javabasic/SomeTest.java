@@ -7,8 +7,11 @@ import com.adolesce.common.entity.User;
 import com.adolesce.common.entity.course.Lesson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,32 +27,32 @@ public class SomeTest {
     public void testInt1() {
         Integer i = new Integer(100);
         Integer j = new Integer(100);
-        System.out.println(i == j);
+        System.out.println(i == j);//false
     }
 
     @Test
     public void testInt2() {
         Integer i = new Integer(100);
         int j = 100;
-        System.out.println(i == j);
+        System.out.println(i == j);//true
     }
 
     @Test
     public void testInt3() {
         Integer i = new Integer(100);
         Integer j = 100;
-        System.out.println(i == j);
+        System.out.println(i == j); //false
     }
 
     @Test
     public void testInt4() {
         Integer i = 100;
         Integer j = 100;
-        System.out.println(i == j);
+        System.out.println(i == j);  //true
 
         Integer x = 128;
         Integer y = 128;
-        System.out.println(x == y);
+        System.out.println(x == y); //false
     }
 
     @Test
@@ -82,35 +85,61 @@ public class SomeTest {
 
     @Test
     public void testString4() {
-        String s1 = new String("hello ") + new String("world");
-        String s2 = "hello world";
-        System.out.println("s1 == s2: " + (s1 == s2));
+        String s1 = new String("hello ") + new String("world");  //新new对象
+        String s2 = "hello world";  //常量池
+        System.out.println("s1 == s2: " + (s1 == s2)); //false
 
-        String s3 = "hello " + "world";
+        String s3 = "hello " + "world";  //常量池
 
         String h = "hello ";
         String w = "world";
-        String s4 = h + w;
+        String s4 = h + w;  //新new对象
+        String s7 = h + w;  //新new对象
 
         String s5 = "hello";
-        s5 = s5 + " world";
+        s5 = s5 + " world";         //新new对象
+        String s6 = s5 + " world";  //新new对象
 
-        System.out.println("s1 == s3: " + (s1 == s3));
-        System.out.println("s1 == s4: " + (s1 == s4));
+        System.out.println("s1 == s3: " + (s1 == s3));  //false
+        System.out.println("s1 == s4: " + (s1 == s4)); //false
 
-        System.out.println("s2 == s3: " + (s2 == s3));
-        System.out.println("s2 == s4: " + (s2 == s4.intern()));
-        System.out.println("s3 == s4: " + (s3 == s4.intern()));
+        System.out.println("s2 == s3: " + (s2 == s3)); //true
+        System.out.println("s2 == s4: " + (s2 == s4.intern())); //true
+        System.out.println("s3 == s4: " + (s3 == s4.intern())); //true
 
-        System.out.println("s1 == s5: " + (s1 == s5));
-        System.out.println("s2 == s5: " + (s2 == s5));
-        System.out.println("s3 == s5: " + (s3 == s5));
-        System.out.println("s4 == s5: " + (s4 == s5));
+        System.out.println("s1 == s5: " + (s1 == s5)); //false
+        System.out.println("s2 == s5: " + (s2 == s5)); //false
+        System.out.println("s3 == s5: " + (s3 == s5)); //false
+        System.out.println("s4 == s5: " + (s4 == s5)); //false
+        System.out.println("s5 == s6: " + (s5 == s6)); //false
+        System.out.println("s4 == s7: " + (s4 == s7.intern())); //false
+    }
+
+    @Test
+    public void test(){
+        String v1 = "aaaaaaaaaaaa";
+
+        String v2 = "aaaaaaaaaaaa";
+
+        Integer v3 = 128;
+
+        Integer v4 = 128;
+
+        Long v5 = 2L;
+        Long v6 = 2L;
+
+        Double v7 = 0.8;
+        Double v8 = 0.8;
+        System.out.println(v1 == v2);
+        System.out.println(v3 == v4);
+        System.out.println("bb" == "bb");
+        System.out.println(v5 == v6);
+        System.out.println(v7 == v8);
     }
 
     @Test
     public void testTryFinally1() {
-        System.out.println("return :" + testReturn5());
+       System.out.println("return :" + testReturn1());
     }
 
     private int testReturn5() {
@@ -149,11 +178,11 @@ public class SomeTest {
     }
 
     private int testReturn3() {
-        int i = 1;
+        int i = -2;
         try {
             i++;
             System.out.println("try:" + i);
-            int x = i / 0;
+            return i++ / --i;
         } catch (Exception e) {
             i++;
             System.out.println("catch:" + i);
@@ -162,7 +191,6 @@ public class SomeTest {
             i++;
             System.out.println("finally:" + i);
         }
-        return i;
     }
 
     private int testReturn1() {
@@ -377,11 +405,162 @@ public class SomeTest {
         int num = 10;
         List<Integer> parseResult = new ArrayList<>();
 
-        for (int i = 0; num != 0; num = num >> 1,i++){
-            if((num&1) == 1){
-                parseResult.add((int) Math.pow(2,i));
+        for (int i = 0; num != 0; num = num >> 1, i++) {
+            if ((num & 1) == 1) {
+                parseResult.add((int) Math.pow(2, i));
             }
         }
         parseResult.forEach(System.err::println);
+    }
+
+    @Test
+    public void testTryCatchWithFor() {
+        try {
+            while (true) {
+                for (int i = 1; i < 50; i++) {
+                    System.out.println(i);
+                    if(i%5 == 0){
+                        int y = i/0;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("记录错误信息：" + e);
+        } finally {
+            try {
+                System.out.println("我是finally，需要执行");
+            }finally {
+
+            }
+        }
+    }
+
+    /**
+     * 69期唐豪公司需求
+     * @throws ParseException
+     */
+    @Test
+    public void test8() throws ParseException {
+        String beginDateStr = "2022-11-09";
+        String endDateStr = "2022-12-20";
+        //1、获取时间区间集合
+        List<String> dateList = getDateList(beginDateStr,endDateStr);
+
+        //2、准备数据：构建日期Map集合（也可以用实体封装）
+        List<Map> dateMapList = new ArrayList<>();
+        Random random = new Random();
+        dateList.forEach(dateStr -> {
+            HashMap dateMap = new HashMap();
+            dateMap.put("date",dateStr);
+            dateMap.put("weekOfMonth",dateStr.substring(0,dateStr.lastIndexOf("-")+1) +
+                    DateUtil.weekOfMonth(DateUtil.parseDate(dateStr))+"周");
+            //此处的条数应该从数据库查询，目前用随机数代替
+            dateMap.put("count",random.nextInt(20));
+            dateMapList.add(dateMap);
+        });
+        System.err.println("数据如下：");
+        System.err.println("==================================");
+        dateMapList.stream().forEach(System.out::println);
+
+        //3、统计数据
+        Map<String,Integer> resultMap = new TreeMap<>();
+        String weekOfMonth = "";
+        for (Map map : dateMapList) {
+            weekOfMonth = (String)map.get("weekOfMonth");
+            Integer count = resultMap.get(weekOfMonth);
+            if(count != null){
+                resultMap.put(weekOfMonth,count + (Integer) map.get("count"));
+            }else{
+                resultMap.put(weekOfMonth,(Integer) map.get("count"));
+            }
+        }
+        System.err.println("统计结果如下：");
+        System.err.println("==================================");
+        resultMap.forEach((k,v) -> System.out.println(k + ":" +v));
+    }
+
+    /**
+     * 根据开始时间和结束时间获取范围内的日期集合
+     * @param beginDateStr 开始日期
+     * @param endDateStr 结束日期
+     * @return
+     * @throws ParseException
+     */
+    private List<String> getDateList(String beginDateStr, String endDateStr) throws ParseException {
+        List<String> dateList = new ArrayList<>();
+        Date beginDate = DateUtil.parseDate(beginDateStr);
+        Date endDate = DateUtil.parseDate(endDateStr);
+        while (!beginDate.after(endDate)) {
+            dateList.add(DateUtil.formatDate(beginDate));
+            beginDate = DateUtils.addDays(beginDate, 1);
+        }
+        return dateList;
+    }
+
+    @Test
+    public void test9(){
+        Map<String, Integer> hashMap = Maps.newHashMap();
+        Map<String, Integer> treeMap = Maps.newTreeMap();
+        Map<String, Integer> linkedHashMap = Maps.newLinkedHashMap();
+        System.out.println("--------------test hashMap");
+        testMap(hashMap);
+        System.out.println("--------------test treeMap");
+        testMap(treeMap);
+        System.out.println("--------------test linkedHashMap");
+        testMap(linkedHashMap);
+    }
+
+    private void testMap(Map<String, Integer> map) {
+        map.put("2022-11-2周:34", 1);
+        map.put("2022-11-3周:60", 2);
+        map.put("2022-11-4周:36", 3);
+        map.put("2022-12-1周:20", 4);
+        map.put("2022-12-2周:54", 4);
+        map.put("2022-12-3周:69", 4);
+        map.put("2022-12-4周:24", 4);
+        map.forEach((k,v) -> System.out.println(k + ":" +v));
+    }
+
+    @Test
+    public void test10(){
+        int a = 2;
+        Integer b = 2;
+        User user = new User();
+        user.setUserName("张三");
+        user.setAge(18);
+        
+        test10_1(2,a,user);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(user);
+        
+    }
+
+    private void test10_1(int a,Integer b,User user) {
+        a = 3;
+        b = new Integer(3);
+        User user1 = new User();
+        user1.setUserName("李四");
+        user1.setAge(20);
+        user = user1;
+    }
+
+    @Test
+    public void test11(){
+        System.out.println(2.0 - 1.1);
+        System.out.println((20.0-11.0)/10.0);
+        System.out.println(new BigDecimal(2.0).subtract(new BigDecimal(1.1)));
+    }
+
+    @Test
+    public void test12(){
+        Short num1 = Short.valueOf("1");
+        Map map = new HashMap();
+        map.put("num1",num1);
+
+        Short num2 = (Short) map.get("num1");
+        System.out.println(num2.equals(1));
+        System.out.println(num2 == 1);
     }
 }

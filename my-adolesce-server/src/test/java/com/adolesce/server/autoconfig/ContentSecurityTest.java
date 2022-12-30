@@ -50,9 +50,8 @@ public class ContentSecurityTest {
     @Test
     public void visionTemplate() throws Exception {
         //文本反垃圾检测
-        String textContent = "你个龟儿子";
-        //String textContent = "要讲文明，不许骂人";
-        Map<String, String> textScanMap = aliyunVisionTemplate.visionTextScan("你个龟儿子");
+        String textContent = "我们都是文明人";
+        Map<String, String> textScanMap = aliyunVisionTemplate.visionTextScan(textContent);
         textScanMap.forEach((k,v)-> System.err.println(k+" : "+v));
 
         System.err.println("---------------------------------------我是分割线-----------------------------------------");

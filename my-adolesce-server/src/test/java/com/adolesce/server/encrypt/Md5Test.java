@@ -1,6 +1,8 @@
 package com.adolesce.server.encrypt;
 
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import cn.hutool.crypto.digest.MD5;
 import org.junit.Test;
 import org.springframework.util.DigestUtils;
@@ -26,11 +28,12 @@ public class Md5Test {
         String password3 = MD5.create().setSalt(salt.getBytes()).digestHex(password);
         String password4 = SecureUtil.md5().digestHex(salt + password);
         String password5 = SecureUtil.md5(salt + password);
-
+        String password6 = new Digester(DigestAlgorithm.MD5).digestHex(salt + password);
 
         System.out.println(password2);
         System.out.println(password3);
         System.out.println(password4);
         System.out.println(password5);
+        System.out.println(password6);
     }
 }

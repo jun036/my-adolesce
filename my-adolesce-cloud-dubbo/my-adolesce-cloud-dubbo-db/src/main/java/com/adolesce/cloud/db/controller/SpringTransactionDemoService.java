@@ -63,6 +63,12 @@ public class SpringTransactionDemoService {
     public void addMpUserToDB3(){
         MpUser user = getMpUser(3);
         this.mpUserMapper.insert(user);
+        addMpUserToDB3_1();
+    }
+
+    public void addMpUserToDB3_1(){
+        MpUser user = getMpUser(31);
+        this.mpUserMapper.insert(user);
         int i = 1 / 0;
     }
 
@@ -197,7 +203,7 @@ public class SpringTransactionDemoService {
     }
 
     @Transactional
-    public synchronized String add88MpUserToDB() throws InterruptedException {
+    public String add88MpUserToDB() {
         List<MpUser> users = this.mpUserMapper.selectList(Wrappers.<MpUser>lambdaQuery().eq(MpUser::getUserName, "测试用户88"));
         if(CollectionUtil.isEmpty(users)){
             MpUser user = getMpUser(88);
@@ -224,30 +230,6 @@ public class SpringTransactionDemoService {
 
         //commit | rollback
     }*/
-
-    @Transactional
-    public void deleteMpUser(String userName){
-        this.mpUserMapper.delete(Wrappers.<MpUser>lambdaQuery().eq(MpUser::getUserName, userName));
-    }
-    public List<MpUser> selectMpUser(String userName){
-        return this.mpUserMapper.selectList(Wrappers.<MpUser>lambdaQuery().eq(MpUser::getUserName, userName));
-    }
-
-    public synchronized String add99MpUserToDB(){
-        return this.springTransactionDemoService.add99MpUserToDB_();
-    }
-
-    @Transactional
-    public String add99MpUserToDB_(){
-        List<MpUser> users = this.mpUserMapper.selectList(Wrappers.<MpUser>lambdaQuery().eq(MpUser::getUserName, "测试用户99"));
-        if(CollectionUtil.isEmpty(users)){
-            MpUser user = getMpUser(99);
-            user.setUserName("测试用户"+99);
-            this.mpUserMapper.insert(user);
-            return "添加用户99成功";
-        }
-        return "数据库已存在99用户，无需添加";
-    }
 
     public static MpUser getMpUser(Integer num) {
         MpUser user = new MpUser();

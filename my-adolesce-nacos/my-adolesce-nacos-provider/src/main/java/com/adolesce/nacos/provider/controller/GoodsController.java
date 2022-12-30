@@ -21,6 +21,9 @@ public class GoodsController {
 
     @GetMapping("/findOne/{id}")
     public Goods findOne(@PathVariable("id") int id) throws InterruptedException {
+        int [] arr = {1,4,5,6};
+
+        System.err.println("服务端被调用了...");
         if (id == 1) {
             // 休眠，触发熔断
             Thread.sleep(3000);

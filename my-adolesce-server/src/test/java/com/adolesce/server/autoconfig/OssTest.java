@@ -52,7 +52,7 @@ public class OssTest {
     //测试下载文件
     @Test
     public void testDown() {
-        String objectName = "2022/06/07/074d1565-c48b-465f-a6c5-8f53165cc1a9.jpg";
+        String objectName = "2022/12/10/8e44a30a-96f0-47a4-8f41-10a33e747df4.jpg";
         String localFileName = "D://222";
         ossTemplate.downloadFile(objectName,localFileName);
     }

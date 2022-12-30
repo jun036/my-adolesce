@@ -32,6 +32,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         SpringUtils.applicationContext = context;
+        //applicationContext.getEnvironment().getProperty("");
     }
 
     /**

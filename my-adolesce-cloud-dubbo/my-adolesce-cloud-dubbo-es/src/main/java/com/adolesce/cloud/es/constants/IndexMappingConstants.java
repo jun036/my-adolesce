@@ -213,8 +213,8 @@ public class IndexMappingConstants {
             "      },\n" +
             "      \"suggestion\":{\n" +
             "          \"type\": \"completion\",\n" +
-            "          \"analyzer\": \"completion_analyzer\",\n" +
-            "          \"search_analyzer\": \"ik_smart\"\n" +
+            "          \"analyzer\": \"completion_analyzer\"\n" +
+     //       "          \"search_analyzer\": \"ik_smart\"\n" +
             "      }\n" +
             "    }\n" +
             "  }\n" +

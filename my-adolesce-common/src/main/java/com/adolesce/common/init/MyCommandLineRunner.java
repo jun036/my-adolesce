@@ -20,7 +20,7 @@ import java.util.Arrays;
 @Order(2)
 public class MyCommandLineRunner implements CommandLineRunner {
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;//have
 
     @Override
     public void run(String... arg0) {

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
@@ -178,11 +180,22 @@ public class MinioTemplate {
                 .contentType(contentType)
                 .stream(in, in.available(), -1)
                 .build();
-
-        /*minioClient.uploadObject(UploadObjectArgs.builder()
-                        .bucket(bucketName).object(objectName).filename("D://").build());*/
-
         return minioClient.putObject(args);
+    }
+
+    /**
+     * 本地文件上传
+     *
+     * @param bucketName  存储桶名称
+     * @param objectName  存储桶里的对象名称
+     * @param filePath  本地文件路径
+     * @return
+     */
+    @SneakyThrows
+    public ObjectWriteResponse putObject(String bucketName, String objectName, String filePath) {
+        ObjectWriteResponse objectWriteResponse = minioClient.uploadObject(UploadObjectArgs.builder()
+                .bucket(bucketName).object(objectName).filename(filePath).build());
+        return objectWriteResponse;
     }
 
     /**
@@ -193,13 +206,37 @@ public class MinioTemplate {
      * @return
      */
     @SneakyThrows
-    public InputStream getObject(String bucketName, String objectName) {
+    public InputStream getObjectForInputStream(String bucketName, String objectName) {
         boolean flag = bucketExists(bucketName);
         if (!flag) {
             return null;
         }
         StatObjectResponse resp = statObject(bucketName, objectName);
         return resp == null ? null : minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
+    }
+
+    /**
+     * 以字节数组的形式获取一个文件对象
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 存储桶里的对象名称
+     * @return
+     */
+    @SneakyThrows
+    public byte[] getObjectForBytes(String bucketName, String objectName) {
+        InputStream inputStream = getObjectForInputStream(bucketName, objectName);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buff = new byte[1024];
+        int rc = 0;
+        while (true) {
+            try {
+                if (!((rc = inputStream.read(buff, 0, 100)) > 0)) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byteArrayOutputStream.write(buff, 0, rc);
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     /**
@@ -212,20 +249,20 @@ public class MinioTemplate {
     @SneakyThrows
     public StatObjectResponse statObject(String bucketName, String objectName) {
         return !bucketExists(bucketName)
-                ? null
-                : minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
+                ? null : minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
     }
 
     /**
      * 删除文件
      *
-     * @param fileName
+     * @param bucketName 存储桶名称
+     * @param objectName 存储桶里的对象名称
      * @return
      * @throws Exception
      */
     @SneakyThrows
-    public void removeMinio(String fileName) {
-        minioClient.removeObject(RemoveObjectArgs.builder().bucket("test").object(fileName).build());
+    public void removeMinio(String bucketName,String objectName) {
+        minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
     }
 
     /**
@@ -233,16 +270,19 @@ public class MinioTemplate {
      *
      * @param bucketName bucket名称
      * @param objectName 文件名称
+     * @param expireTime 有效期，秒（1秒到7天之间）
      * @return url
      */
     @SneakyThrows
-    public String getObjectURL(String bucketName, String objectName) {
-        GetPresignedObjectUrlArgs build = GetPresignedObjectUrlArgs.builder()
+    public String getObjectURL(String bucketName, String objectName, int expireTime) {
+        GetPresignedObjectUrlArgs.Builder builderArgs = GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
                 .bucket(bucketName)
-                .object(objectName)
-//                .expiry(60 * 60 * 24)
-                .build();
+                .object(objectName);
+        if(expireTime != 0){
+            builderArgs.expiry(expireTime);
+        }
+        GetPresignedObjectUrlArgs build = builderArgs.build();
         return minioClient.getPresignedObjectUrl(build);
     }
 }

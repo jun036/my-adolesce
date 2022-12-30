@@ -27,6 +27,7 @@ public class GoodsController {
      * 1、什么时候出现降级?
      *    1. 出现异常
      *    2. 服务调用超时（Hystrix的超时时间，默认1s超时）
+     *    3. 熔断
      *
      * 2、服务提供方降级引入步骤？
      *      1、在服务提供方，引入 hystrix 依赖
@@ -46,8 +47,8 @@ public class GoodsController {
     @GetMapping("/findOne/{id}")
     @HystrixCommand(fallbackMethod = "findOneFallback", commandProperties = {
             //设置Hystrix的超时时间，超过该时间会触发服务降级，默认是1s (其他相关配置项可到 HystrixCommandProperties 类进行查找)
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"),
-            //监控时间 默认5000 毫秒
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
+            //熔断监控窗口时长 默认5000 毫秒
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000"),
             //失败次数。默认20次
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "20"),

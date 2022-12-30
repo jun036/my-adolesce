@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
  * 什么时候降级：
  * 1. 出现异常
  * 2. 服务调用超时（默认1s超时）
+ * 3. 熔断之后
  * <p>
  * 服务提供方降级引入步骤：
  * 1、首先 feign 组件已经集成了 hystrix 组件，客户端服务降级基于feign。

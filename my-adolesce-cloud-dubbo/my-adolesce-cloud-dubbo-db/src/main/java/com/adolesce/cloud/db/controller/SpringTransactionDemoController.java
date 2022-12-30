@@ -4,9 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author Administrator
  * @version 1.0
@@ -64,30 +61,24 @@ public class SpringTransactionDemoController {
      * @return
      * @throws InterruptedException
      */
-    @GetMapping("/add88MpUserToDB/{num}")
-    public Integer saveUser(@PathVariable("num")Integer num) {
-        this.springTransactionDemoService.deleteMpUser("测试用户99");
+    @PostMapping("/addMpUserToDB88")
+    public String addMpUserToDB88() {
+        String addResult = this.springTransactionDemoService.add88MpUserToDB();
+        return addResult;
+    }
 
-        CountDownLatch countDownLatch = new CountDownLatch(num);
-        for (int i = 0; i < num; i++) {
-            new Thread(() -> {
-                try {
-                    countDownLatch.await();
-                    TimeUnit.MILLISECONDS.sleep(100L);
-                    String addResult = this.springTransactionDemoService.add99MpUserToDB();
-                    System.out.println(addResult);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-            countDownLatch.countDown();
+    /**
+     * 保存用户测试方法
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    @PostMapping("/addMpUserToDB99")
+    public String addMpUserToDB99() {
+        synchronized (this){
+            String addResult = this.springTransactionDemoService.add88MpUserToDB();
+            return addResult;
         }
-        try {
-            TimeUnit.SECONDS.sleep(1L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return this.springTransactionDemoService.selectMpUser("测试用户99").size();
     }
 
 }

@@ -120,8 +120,12 @@ public class LogAspect {
     //正常情况访问
     // Around-Before ->> Before ->> 目标方法 ->> AfterReturning ->> After ->> Around-AfterReturning ->> Around-After
 
+    // Around-Before ->> Before ->> 目标方法 ->> AfterReturning ->> After ->> Around-AfterReturning
+
     //异常情况访问
     // Around-Before ->> Before ->> 目标方法 ->> AfterThrowing  ->> After ->> Around-AfterThrowing  ->> Around-After
+
+    // Around-Before ->> Before ->> 目标方法 ->> AfterThrowing  ->> After
 
 
     //Spring-Boot-1.X 对应Spring4

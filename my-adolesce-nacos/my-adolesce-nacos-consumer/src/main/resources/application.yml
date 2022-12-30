@@ -50,12 +50,3 @@ feign:
         max-connections-per-route: 50 # 单个路径的最大连接数
 #      default: # default是针对全局服务，也可配置针对某个微服务
 #        loggerLevel: FULL #  日志级别
-
-# 设置Hystrix超时时间（到达该时间服务提供方仍未响应，则走服务降级逻辑）【合理的时间应该设置为 重试次数*ribbon.ReadTimeout，以保证ribbon重试次数都能够执行完】
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 2000

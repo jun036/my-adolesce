@@ -154,7 +154,7 @@ public class RabbitMQListener {
     /**
      * 手动确认模式
      */
-    /*@RabbitListener(queues = {"boot-work-queue"})
+    @RabbitListener(queues = {"boot-work-queue"})
     public void workQueueConsumer1(User user, Channel channel, Message message) throws IOException {
         try {
             //业务处理代码
@@ -184,5 +184,5 @@ public class RabbitMQListener {
             log.error("消息已重复处理失败,拒绝再次接收...", e);
             channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
         }
-    }*/
+    }
 }

@@ -13,8 +13,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoodsEntity {
-    private String name;
+public class GoodsEntity extends GoodsParent {
+    private GoodsEntity(String imgPath, Integer stock, String name, Double price) {
+        super(imgPath, stock);
+        this.name = name;
+        this.price = price;
+    }
+
+    public String name;
     private Double price;
     private Integer code;
+
+    public void printName() {
+        System.out.println("子类打印名字：" + this.getName());
+    }
+
+    private void printPirce(String param) {
+        System.out.println("子类打印价格：" + this.getPrice() + ",参数："+param);
+    }
+
+
 }

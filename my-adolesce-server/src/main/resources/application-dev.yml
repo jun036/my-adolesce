@@ -1,4 +1,12 @@
 spring:
+  thymeleaf:
+    cache: false  #关闭模板缓存，方便测试
+    prefix: classpath:/templates/
+    encoding: UTF-8
+    mode: HTML5
+    servlet:
+      content-type: text/html
+    #suffix: .html
   freemarker:
     cache: false  #关闭模板缓存，方便测试
     settings:
@@ -8,9 +16,9 @@ spring:
   mail:
     host: smtp.163.com  #发送方SMTP服务器主机，如果是QQ邮箱：smtp.qq.com
     username: liuweidong0008@163.com # 发件人邮箱
-    password: HLGDMPYGCORVURGW   #开通SMTP功能(授权码，而不是登录密码)
+    password:    #开通SMTP功能(授权码，而不是登录密码)
     default-encoding: UTF-8 #默认MimeMessage编码
-    test-connection: true  #是否在启动时测试邮件服务器是否可用
+    test-connection: false  #是否在启动时测试邮件服务器是否可用
     properties:
       mail:
         debug: true
@@ -133,12 +141,12 @@ sms:
   huyi:
     url: http://106.ihuyi.com/webservice/sms.php?method=Submit
     account: C61078084
-    password: d9f159954e1f35921dd3abc483a493ae
+    password:
   yimei:
     singleUrl: http://shmtn.b2m.cn/inter/sendSingleSMS
     batchUrl: http://shmtn.b2m.cn/inter/sendBatchOnlySMS
     appId: EUCP-EMY-SMS1-391UA
-    secretKey: 759B0349B84719D4
+    secretKey:
     signName: 【美团】
 #    appId: EUCP-EMY-SMS1-1IOG0
 #    secretKey: 366FC3E3AC0F03CE

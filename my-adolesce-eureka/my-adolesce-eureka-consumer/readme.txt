@@ -81,7 +81,7 @@ Eureka客户端（服务消费方）
             - 请求方式：GET
             - 请求路径：/user/{id}
             - 请求参数：Long id
-            - 返回值类型：User
+            - 返回值类型：User (由于feign底层是进行byte字节数组传输，然后使用MappingJackon进行序列化反序列化的，所以只需要有相同属性即可，包括Map也可以)
             这样，Feign就可以帮助我们发送http请求，无需自己使用RestTemplate来发送了。
 
     6）、Feign调用日志级别设置

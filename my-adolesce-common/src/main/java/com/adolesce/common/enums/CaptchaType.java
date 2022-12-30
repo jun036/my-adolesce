@@ -17,7 +17,8 @@ public enum CaptchaType implements StrEnum {
     HUTOOL_CIRCLE_CHAR("hutool.circle.char", "圆圈干扰字符"),
     HUTOOL_SHEAR_CHAR("hutool.shear.char", "扭曲干扰字符"),
     HUTOOL_RANDOM_NUMBER("hutool.random.number", "随机数字"),
-    HUTOOL_MATH("hutool.math", "四则运算");
+    HUTOOL_MATH("hutool.math", "四则运算"),
+    HUTOOL_GIF("hutool.gif", "动图");
 
     private String typeName;
     private String typeDesc;

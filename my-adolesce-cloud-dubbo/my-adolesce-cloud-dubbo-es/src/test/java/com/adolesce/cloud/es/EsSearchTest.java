@@ -637,6 +637,109 @@ public class EsSearchTest {
         excuteHotelQuery(query, EsResultOperator.build().page(new Page(0,100)));
     }
 
+    /**
+     * DSL:
+     *    GET /hotel/_search
+     *    {
+     *     "track_total_hits": true,
+     *       "query": {
+     *          "bool": {
+     *            "must": [
+     *              {"term": {"city": "上海" }}
+     *            ],
+     *            "must_not": [
+     *              { "range": { "price": { "lte": 200 } }}
+     *            ],
+     *            "filter": [
+     *              { "range": {"score": { "gte": 45 } }},
+     *              {"geo_distance": {
+     *                  "location": "31.21,121.5",
+     *                  "distance": "15km"
+     *                }
+     *              }
+     *            ]
+     *          }
+     *       },
+     *      "from": 0,
+     *      "size": 30,
+     *      "highlight": {
+     *        "fields": {
+     *          "name": {
+     *            "pre_tags": "<font 'color = red'>",
+     *            "post_tags": "</font>",
+     *            "require_field_match": "false"
+     *          },
+     *          "brand": {
+     *             "pre_tags": "<font 'color = red'>",
+     *             "post_tags": "</font>",
+     *            "require_field_match": "false"
+     *          }
+     *        }
+     *      },
+     *      "sort": [
+     *        {"price": "asc"},
+     *          # 如果希望分数也参与排序，可以在sort中加上：{"_score":"desc" }，这样sort了之后分数不会为null
+     *        {"_score":"desc" },
+     *        {
+     *          "_geo_distance" : {
+     *            "location" : "31.21,121.5",
+     *            "order" : "asc",
+     *            "unit" : "km"
+     *          }
+     *        }
+     *      ]
+     *    }
+     */
+    @Test
+    public void testQuery() throws Exception {
+        //1.构建boolQuery
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+
+        //2.构建各个查询条件
+        //2.1 查询城市名称为:上海
+        QueryBuilder termQuery = QueryBuilders.termQuery("city", "上海");
+        boolQuery.must(termQuery);
+
+        //2.3 查询价格不小于200
+        RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery("price").lte(200);
+        boolQuery.mustNot(rangeQuery);
+
+        //2.4. 查询评分大于等于45
+        QueryBuilder matchQuery = QueryBuilders.rangeQuery("score").gte(45);
+        boolQuery.filter(matchQuery);
+        //范围查询
+        GeoDistanceQueryBuilder geoQuery = QueryBuilders.geoDistanceQuery("location")
+                .point(new GeoPoint("31.21,121.5"))
+                .distance(15, DistanceUnit.KILOMETERS);
+        boolQuery.filter(geoQuery);
+
+        //指定分页
+        Page page = new Page(1,30);
+        page.addOrder(new Order("price",Direction.ASC));
+        page.addOrder(new Order("_score",Direction.ASC));
+
+        HighlightBuilder highlighter = new HighlightBuilder();
+        //设置title字段中匹配的词条高亮
+        highlighter.field("name");
+        highlighter.preTags("<font color='red'>");
+        highlighter.postTags("</font>");
+        highlighter.requireFieldMatch(false);
+
+        //设置title字段中匹配的词条高亮
+        highlighter.field("brand");
+        highlighter.preTags("<font color='red'>");
+        highlighter.postTags("</font>");
+        highlighter.requireFieldMatch(false);
+
+
+        GeoDistanceSortBuilder geoDistanceSortBuilder = SortBuilders.geoDistanceSort(geoQuery.fieldName(), geoQuery.point())
+                .order(SortOrder.ASC)
+                .unit(DistanceUnit.KILOMETERS);
+
+        //3.执行查询
+        excuteHotelQuery(boolQuery, EsResultOperator.build().page(page).highLight(highlighter).geoSort(geoDistanceSortBuilder));
+    }
+
 
     /**
      * DSL:

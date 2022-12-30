@@ -11,6 +11,9 @@ knife4j:
 spring:
   application:
     name: my-adolesce
+  main:
+    allow-bean-definition-overriding: true #允许bean定义覆盖
+    allow-circular-references=true: true #允许循环依赖（springboot2.6版本之后这个设置默认为false，不允许出现循环依赖的烂代码）
   devtools: #热部署
     restart:
       enabled: true #热部署开关，false即不启用热部署

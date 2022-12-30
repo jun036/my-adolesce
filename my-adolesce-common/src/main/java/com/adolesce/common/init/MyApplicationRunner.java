@@ -21,7 +21,7 @@ import java.util.Arrays;
 @Order(1)
 public class MyApplicationRunner implements ApplicationRunner {
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate; //have
 
     @Override
     public void run(ApplicationArguments param) throws Exception {
