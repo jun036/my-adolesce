@@ -370,10 +370,10 @@ public class RedisTemplateTest {
         //增加元素的score值，并返回增加后的值
         zsetOperation.incrementScore("key", "value", 23.1);
 
-        //返回元素在集合的排名,有序集合是按照元素的score值由小到大排列
+        //返回元素在集合的排名,有序集合是按照元素的score值由 小到大 排列
         zsetOperation.rank("key", "value");
 
-        //返回元素在集合的排名,按元素的score值由大到小排列
+        //返回元素在集合的排名,按元素的score值由 大到小排列
         zsetOperation.reverseRank("key", "value");
 
         //获取集合中给定区间的元素(start 开始位置，end 结束位置, -1查询所有)

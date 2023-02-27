@@ -21,4 +21,8 @@ public class CloudDubboDBApplication {
     public static void main(String[] args) {
         SpringApplication.run(CloudDubboDBApplication.class, args);
     }
+
+    public static void main(String[] args,String a) {
+        SpringApplication.run(CloudDubboDBApplication.class, args);
+    }
 }

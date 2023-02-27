@@ -7,6 +7,7 @@ import com.aliyun.imageaudit20191230.models.*;
 import com.aliyun.teaopenapi.models.Config;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -156,7 +157,50 @@ public class AliyunVisionTemplate {
             List<ScanImageResponseBody.ScanImageResponseBodyDataResults> results = response.getBody().getData().getResults();
             for (ScanImageResponseBody.ScanImageResponseBodyDataResults result : results) {
                 List<ScanImageResponseBody.ScanImageResponseBodyDataResultsSubResults> subResults = result.getSubResults();
-                for(ScanImageResponseBody.ScanImageResponseBodyDataResultsSubResults subResult:subResults){
+                for (ScanImageResponseBody.ScanImageResponseBodyDataResultsSubResults subResult : subResults) {
+                    //根据scene和suggestion做相关处理
+                    String suggestion = subResult.getSuggestion();
+                    String label = subResult.getLabel();
+                    resultMap.put("suggestion", suggestion);
+                    if (!suggestion.equals("pass")) {
+                        resultMap.put("label", label);
+                        return resultMap;
+                    }
+                }
+            }
+        }
+        return resultMap;
+    }
+
+    /**
+     * 图片内容安全审核
+     */
+    public Map<String, String> visionImageScan2(List<InputStream> inputStreams) throws Exception {
+        //设置待检测图片， 一张图片一个task
+        List<ScanImageAdvanceRequest.ScanImageAdvanceRequestTask > taskList = new ArrayList();
+        inputStreams.forEach(
+                inputStream -> {
+                    ScanImageAdvanceRequest.ScanImageAdvanceRequestTask task = new ScanImageAdvanceRequest.ScanImageAdvanceRequestTask();
+                    task.setImageURLObject(inputStream) ;
+                    taskList.add(task);
+                }
+        );
+        //设置图片扫描
+        ScanImageAdvanceRequest scanImageAdvanceRequest = new ScanImageAdvanceRequest()
+                .setScene(Arrays.asList(aliyunVisionProperties.getImgScenes().split(","))) //设置要检测的场景
+                .setTask(taskList);
+        log.info("图片检测任务：{}", JSON.toJSONString(scanImageAdvanceRequest, true));
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        ScanImageResponse  response = client.scanImageAdvance(scanImageAdvanceRequest,runtime);
+        log.info("图片检测结果：{}", JSON.toJSONString(response, true));
+        //服务端接收到请求，并完成处理返回的结果
+        Map<String, String> resultMap = new HashMap<>();
+        if (response != null) {
+            //图片要检测的场景的处理结果, 如果是多个场景，则会有每个场景的结果
+            List<ScanImageResponseBody.ScanImageResponseBodyDataResults> results = response.getBody().getData().getResults();
+            for (ScanImageResponseBody.ScanImageResponseBodyDataResults result : results) {
+                List<ScanImageResponseBody.ScanImageResponseBodyDataResultsSubResults> subResults = result.getSubResults();
+                for (ScanImageResponseBody.ScanImageResponseBodyDataResultsSubResults subResult : subResults) {
                     //根据scene和suggestion做相关处理
                     String suggestion = subResult.getSuggestion();
                     String label = subResult.getLabel();

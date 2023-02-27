@@ -52,11 +52,11 @@ public class AliyunGreenTemplate {
      */
     public Map<String, String> greenTextScan(String content) throws Exception {
         TextScanRequest textScanRequest = new TextScanRequest();
-        textScanRequest.setSysAcceptFormat(FormatType.JSON);
+        textScanRequest.setAcceptFormat(FormatType.JSON);
         textScanRequest.setHttpContentType(FormatType.JSON);
-        textScanRequest.setSysMethod(MethodType.POST); // 指定请求方法
-        textScanRequest.setSysEncoding("UTF-8");
-        textScanRequest.setSysRegionId("cn-shanghai");
+        textScanRequest.setMethod(MethodType.POST); // 指定请求方法
+        textScanRequest.setEncoding("UTF-8");
+        textScanRequest.setRegionId("cn-shanghai");
 
         List<Map<String, Object>> tasks = new ArrayList<>();
         Map<String, Object> task1 = new LinkedHashMap<>();
@@ -76,8 +76,8 @@ public class AliyunGreenTemplate {
         log.info("文本检测任务：{}", JSON.toJSONString(data, true));
         textScanRequest.setHttpContent(data.toJSONString().getBytes("UTF-8"), "UTF-8", FormatType.JSON);
         // 请务必设置超时时间
-        textScanRequest.setSysConnectTimeout(3000);
-        textScanRequest.setSysReadTimeout(6000);
+        textScanRequest.setConnectTimeout(3000);
+        textScanRequest.setReadTimeout(6000);
 
 //        返回结果内容
         Map<String, String> resultMap = new HashMap<>();
@@ -150,12 +150,12 @@ public class AliyunGreenTemplate {
     public Map<String, String> greenImageScan(List<String> imageList) throws Exception {
         ImageSyncScanRequest imageSyncScanRequest = new ImageSyncScanRequest();
         // 指定api返回格式
-        imageSyncScanRequest.setSysAcceptFormat(FormatType.JSON);
+        imageSyncScanRequest.setAcceptFormat(FormatType.JSON);
         // 指定请求方法
-        imageSyncScanRequest.setSysMethod(MethodType.POST);
-        imageSyncScanRequest.setSysEncoding("utf-8");
+        imageSyncScanRequest.setMethod(MethodType.POST);
+        imageSyncScanRequest.setEncoding("utf-8");
         //支持http和https
-        imageSyncScanRequest.setSysProtocol(ProtocolType.HTTP);
+        imageSyncScanRequest.setProtocol(ProtocolType.HTTP);
         JSONObject httpBody = new JSONObject();
         /**
          * 设置要检测的场景, 计费是按照该处传递的场景进行
@@ -194,8 +194,8 @@ public class AliyunGreenTemplate {
          * 请设置超时时间, 服务端全链路处理超时时间为10秒，请做相应设置
          * 如果您设置的ReadTimeout小于服务端处理的时间，程序中会获得一个read timeout异常
          */
-        imageSyncScanRequest.setSysConnectTimeout(3000);
-        imageSyncScanRequest.setSysReadTimeout(10000);
+        imageSyncScanRequest.setConnectTimeout(3000);
+        imageSyncScanRequest.setReadTimeout(10000);
         HttpResponse httpResponse = null;
         try {
             httpResponse = client.doAction(imageSyncScanRequest);

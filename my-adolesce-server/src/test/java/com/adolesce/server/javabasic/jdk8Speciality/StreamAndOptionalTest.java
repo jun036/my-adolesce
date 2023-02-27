@@ -41,6 +41,7 @@ public class StreamAndOptionalTest {
 
         //还有许多重载形式的方法，可以返回带类型的Stream，例如：
         LongStream longStream = Arrays.stream(new long[]{1, 2, 3, 4, 5});
+        Stream<Long> longStream1 = longStream.boxed();
         //DoubleStream doubleStream = Arrays.stream(new double[]{0.7, 2.3, 3.7, 4.2, 5.9});
 
         LongSummaryStatistics statistics = longStream.summaryStatistics();
@@ -328,6 +329,15 @@ public class StreamAndOptionalTest {
         //按是否符合条件（true|false）进行分组
         Map<Boolean, List<User>> kvb = users.stream().collect(Collectors.partitioningBy(user -> user.getAge() > 10));
         kvb.forEach((k, v) -> System.err.println(k + ":" + v));
+
+        //对基本数据类型分组，并且求出其中重复元素和出现次数
+        int[] arr = {1, 2, 3, 4, 5, 2, 3, 4, 5, 5};
+        Map<Integer, Long> counts = Arrays.stream(arr)
+                .boxed()
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+        counts.entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .forEach(e -> System.out.println("Element: " + e.getKey() + ", Count: " + e.getValue()));
     }
 
     /**

@@ -60,11 +60,11 @@ public class WebMvcConfig implements WebMvcConfigurer /*extends WebMvcConfigurat
         log.info("开始进行静态资源映射...");
 
         //1、映射swagger自动生成静态资源
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         //registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 
-        //默认WebMvcAutoConfiguration就会映射【static、templates等目录】，所以放在这些目录的资源无需任何映射就能被找到
+        //注意：默认WebMvcAutoConfiguration就会映射【static、templates等目录】，所以放在这些目录的资源无需任何映射就能被找到
         //但是只有在没有WebMvcConfigurationSupport的前提下才会加载WebMvcAutoConfiguration【@ConditionalOnMissingBean({WebMvcConfigurationSupport.class})】
         //所以一旦自定义了WebMvcConfigurationSupport，static就会失效，就要重写其中的addResourceHandlers方法
 

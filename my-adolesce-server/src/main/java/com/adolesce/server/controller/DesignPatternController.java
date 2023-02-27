@@ -1,10 +1,7 @@
 package com.adolesce.server.controller;
 
 import com.adolesce.server.service.impl.DesignPatternService;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("designPattern")
-public class DesignPatternController implements ApplicationContextAware {
+public class DesignPatternController {
     @Autowired
     private DesignPatternService designPatternService;
 
@@ -26,10 +23,5 @@ public class DesignPatternController implements ApplicationContextAware {
     @RequestMapping("strategyMode1/{onOff}/{orderType}")
     public void strategyMode1(@PathVariable("onOff") String onOff,@PathVariable("orderType") int orderType){
         designPatternService.strategyMode1(onOff,orderType);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        System.out.println(applicationContext);
     }
 }

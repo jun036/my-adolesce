@@ -41,14 +41,14 @@ public class JWTTest {
                 .setClaims(claims) //payload，存放数据的位置，不能放置敏感数据，如：密码等
                 .signWith(SignatureAlgorithm.HS256, secret) //设置加密方法和加密盐
                 //.setExpiration(new Date(System.currentTimeMillis() + 3000)) //设置过期时间，3秒后过期
-                .setExpiration(new DateTime().offset(DateField.SECOND, 3)) //设置过期时间，12小时后过期
+                .setExpiration(new DateTime().offset(DateField.HOUR, 3)) //设置过期时间，12小时后过期
                 .compact();
         System.out.println(jwt);
     }
 
     @Test
     public void testDecodeToken() {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxMzMzMzMzMzMzIiwiaWQiOiI4OCIsImV4cCI6MTY3MDU1MzA2Nn0.FYyh3tlXjX3qYyxfk23UiVO4gW0m9jlfXhfSG8Scw_w";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxMzMzMzMzMzMzIiwiaWQiOiI4OCIsImV4cCI6MTY3NjY0MzgyMn0.sZohIwltB3QWjeOIg6GTKWrSf0IPrRsVVIcFT9Bz2MA";
         try {
             // 通过token解析数据
             Claims body = Jwts.parser()

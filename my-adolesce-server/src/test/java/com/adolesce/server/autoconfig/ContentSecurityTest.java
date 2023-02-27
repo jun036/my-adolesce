@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +59,20 @@ public class ContentSecurityTest {
         System.err.println("---------------------------------------我是分割线-----------------------------------------");
 
         //图片检测
-        List<String> list = new ArrayList<>();
+        /*List<String> list = new ArrayList<>();
         list.add("http://images.china.cn/site1000/2018-03/17/dfd4002e-f965-4e7c-9e04-6b72c601d952.jpg");
         list.add("https://gd-hbimg.huaban.com/81ce67c79ab7f9a163674c489aff0bab4d8a9a239aef1-kOa6S9_fw1200");
         Map<String,String> imageScanMap = aliyunVisionTemplate.visionImageScan(list);
+        imageScanMap.forEach((k,v)-> System.err.println(k+" : "+v));*/
+
+
+        //InputStream inputStream1 = new ByteArrayInputStream(new byte[12]);
+        //InputStream inputStream1 = new FileInputStream(new File("D:\\some-test-file\\pic\\1.jpg"));
+        URL url = new URL("http://images.china.cn/site1000/2018-03/17/dfd4002e-f965-4e7c-9e04-6b72c601d952.jpg");
+        InputStream inputStream1 = url.openConnection().getInputStream();
+        List<InputStream> inputStreams = new ArrayList<>();
+        inputStreams.add(inputStream1);
+        Map<String,String> imageScanMap = aliyunVisionTemplate.visionImageScan2(inputStreams);
         imageScanMap.forEach((k,v)-> System.err.println(k+" : "+v));
     }
 }

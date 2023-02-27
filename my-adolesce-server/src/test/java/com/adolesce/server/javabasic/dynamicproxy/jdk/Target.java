@@ -1,4 +1,4 @@
-package com.adolesce.server.javabasic.designPattern;
+package com.adolesce.server.javabasic.dynamicproxy.jdk;
 
 public class Target implements TargetInterface {
     @Override

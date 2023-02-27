@@ -1,4 +1,4 @@
-package com.adolesce.server.javabasic.hmtest.reflex;
+package com.adolesce.server.javabasic.basic.reflex;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
@@ -35,7 +35,7 @@ public class ReflexTest {
     @Test
     public void test1() throws ClassNotFoundException {
         //1、Class.forName方式
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         //2、类名.class方式
         Class bClass = GoodsEntity.class;
         //3、对象.getClass()方式
@@ -51,7 +51,7 @@ public class ReflexTest {
      */
     @Test
     public void test2() throws ClassNotFoundException, NoSuchMethodException {
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         //1、获取所有公共构造器集合
         Constructor[] constructors = aClass.getConstructors();
         System.out.println("公共构造器集合");
@@ -78,7 +78,7 @@ public class ReflexTest {
      */
     @Test
     public void test3() throws Exception {
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         //1、利用无参构造器创建对象
         Constructor constructor = aClass.getConstructor();
         Object o1 = constructor.newInstance();
@@ -103,7 +103,7 @@ public class ReflexTest {
      */
     @Test
     public void test4() throws ClassNotFoundException, NoSuchFieldException {
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         //1、获取所有公共字段集合（包括父类public修饰字段）
         Field[] fields = aClass.getFields();
         System.out.println("公共字段集合");
@@ -131,7 +131,7 @@ public class ReflexTest {
      */
     @Test
     public void test5() throws Exception {
-        Class<?> aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class<?> aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         Object object = aClass.newInstance();
         //1、为公共Field字段设置值
         Field nameField = aClass.getField("name");
@@ -164,7 +164,7 @@ public class ReflexTest {
      */
     @Test
     public void test6() throws ClassNotFoundException, NoSuchMethodException {
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         //1、获取所有公共方法集合（包括父类public修饰方法）
         Method[] methods = aClass.getMethods();
         System.out.println("公共方法集合");
@@ -191,7 +191,7 @@ public class ReflexTest {
      */
     @Test
     public void test7() throws Exception {
-        Class aClass = Class.forName("com.adolesce.server.javabasic.hmtest.reflex.GoodsEntity");
+        Class aClass = Class.forName("com.adolesce.server.javabasic.basic.reflex.GoodsEntity");
         GoodsEntity object = (GoodsEntity)aClass.newInstance();
         //调用父类公共方法
         Method setStockMethod = aClass.getMethod("setStock", Integer.class);

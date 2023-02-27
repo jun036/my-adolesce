@@ -24,6 +24,9 @@ import javax.annotation.Resource;
 @Service
 public class MyBean implements BeanNameAware, BeanFactoryAware, ApplicationContextAware, BeanPostProcessor, InitializingBean, DisposableBean {
     @Autowired
+    private MyBean2 myBean2;
+
+    @Autowired
     private StringRedisTemplate redisTemplate;
     @Autowired
     private MyApplicationContextAware aware;

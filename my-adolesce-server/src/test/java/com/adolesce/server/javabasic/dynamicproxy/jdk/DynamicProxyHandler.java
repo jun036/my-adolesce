@@ -1,4 +1,4 @@
-package com.adolesce.server.javabasic.designPattern;
+package com.adolesce.server.javabasic.dynamicproxy.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

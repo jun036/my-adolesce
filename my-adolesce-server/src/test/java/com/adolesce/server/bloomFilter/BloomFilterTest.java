@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.*;
 import java.nio.charset.Charset;
 
-import static com.adolesce.server.bloomFilter.BloomFileter.MisjudgmentRate.VERY_SMALL;
+import static com.adolesce.server.bloomFilter.BloomFileter.MisjudgmentRate.HIGH;
 
 /**
  * @version 1.0
@@ -45,17 +45,17 @@ public class BloomFilterTest {
     @Test
     public void test2() {
         int dataCount = 1000000;//预计要插入多少数据
-        BloomFileter.MisjudgmentRate fpp = VERY_SMALL;//期望的误判率
+        BloomFileter.MisjudgmentRate fpp = HIGH;//期望的误判率
 
         BloomFileter fileter = new BloomFileter(fpp,dataCount,null);
 
         //插入数据
         for (int i = 0; i < 1000000; i++) {
-            fileter.add(String.valueOf(i));
+            fileter.addIfNotExist(String.valueOf(i));
         }
         int count = 0;
         for (int i = 2000000; i < 3000000; i++) {
-            boolean flag = fileter.check(String.valueOf(i));
+            boolean flag =  fileter.addIfNotExist(String.valueOf(i));
             if (!flag) {
                 count++;
                 System.out.println(i + "误判了");
@@ -70,7 +70,7 @@ public class BloomFilterTest {
      */
     @Test
     public void test3() throws IOException {
-        int dataCount = 7;//预计要插入多少数据
+        int dataCount = 10;//预计要插入多少数据
         double fpp = 0.001;//期望的误判率
         BloomFilter<String> filter = BloomFilter.create(Funnels.stringFunnel(Charset.forName("UTF-8")), dataCount, fpp);
 
@@ -85,15 +85,18 @@ public class BloomFilterTest {
         System.out.println(filter.put("33333"));
 
         //将过滤器当前状态保存至文件，以备后续使用
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\22.obj"));
+        OutputStream oos = new FileOutputStream("D:\\22.obj");
         filter.writeTo(oos);
 
         //将文件中的数据恢复成布隆过滤器(里面有之前过滤的很多数据记录)
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\22.obj"));
-        BloomFilter<CharSequence> bloomFilter = BloomFilter.readFrom(ois, Funnels.stringFunnel(Charset.forName("UTF-8")));
+        InputStream ois = new FileInputStream("D:\\22.obj");
+        BloomFilter<String> bloomFilter = BloomFilter.readFrom(ois, Funnels.stringFunnel(Charset.forName("UTF-8")));
 
         System.out.println(bloomFilter.put("44444"));
         System.out.println(bloomFilter.put("abcde"));
+
+
+        System.out.println(bloomFilter.mightContain("44444"));
     }
 
     /**
@@ -102,15 +105,15 @@ public class BloomFilterTest {
     @Test
     public void test4() {
         int dataCount = 1000000;//预计要插入多少数据
-        double fpp = 0.5;//期望的误判率
+        double fpp = 0.00000000000001;//期望的误判率
 
         BloomFilter<String> bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charset.forName("UTF-8")), dataCount, fpp);
         //插入数据
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 1; i <= 1000000; i++) {
             bloomFilter.put(String.valueOf(i));
         }
         int count = 0;
-        for (int i = 1000000; i < 2000000; i++) {
+        for (int i = 1000001; i <= 2000000; i++) {
             if (bloomFilter.mightContain(String.valueOf(i))) {
                 count++;
                 System.out.println(i + "误判了");

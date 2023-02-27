@@ -88,7 +88,7 @@ public class OssTest {
      */
     @Test
     public void listFileName() {
-        List<String> res = ossTemplate.listFileName("2022/06/05/");
+        List<String> res = ossTemplate.listFileName("2023/01/26/");
         res.forEach(System.err::println);
 
         /*2022/06/05/16909a9d-48eb-47da-9fbd-d07b256955c5.jpg

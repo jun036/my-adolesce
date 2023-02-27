@@ -43,7 +43,7 @@ public class MinioTest {
     //测试创建桶
     @Test
     public void testCreateBucket() {
-        String bucketName = "mytest-bucket";
+        String bucketName = "mytest-bucket111";
         boolean result = minioTemplate.createBucket(bucketName);
         System.out.println(result ? "创建桶成功！" : "创建桶失败");
     }
@@ -55,7 +55,7 @@ public class MinioTest {
         buckets.forEach(System.out::println);
     }
 
-    //测试删除所有桶名称
+    //测试删除指定桶
     @Test
     public void testRemoveBucket() {
         String bucketName = "ly-bucket";
@@ -83,7 +83,7 @@ public class MinioTest {
     @Test
     public void testUploadFile1() throws FileNotFoundException {
         //1、桶
-        String bucketName = "mytest-bucket";
+        String bucketName = "mytest-bucket111";
         //2、上传上去的路径文件名
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String todayStr = sdf.format(new Date());

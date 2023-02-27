@@ -46,7 +46,7 @@
         id, user_name, password, name, age, email, birthday, create_time, update_time
     </sql>
 
-    <insert id="insert" parameterType="com.adolesce.cloud.dubbo.domain.db.BatisUser">
+    <insert id="insert" parameterType="com.adolesce.cloud.dubbo.domain.db.BatisUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO my_batis_user ( user_name, password, name, age, email, birthday, create_time, update_time)
         VALUES (#{userName}, #{password}, #{name}, #{age},#{email},#{birthday},#{createTime},#{updateTime})
     </insert>
@@ -55,8 +55,8 @@
     <insert id="batchInsert" parameterType="List">
         INSERT INTO
             my_batis_user (user_name, password, name, age, email, birthday, create_time, update_time) VALUES
-        <foreach collection="list" item="user" separator="," open="(" close=")" index="num">
-            #{user.userName},#{user.password},#{user.name},#{user.age},#{user.email},#{user.birthday},#{user.createTime},#{user.updateTime}
+        <foreach collection="list" item="user" separator=","  index="num">
+           (#{user.userName},#{user.password},#{user.name},#{user.age},#{user.email},#{user.birthday},#{user.createTime},#{user.updateTime})
         </foreach>
     </insert>
 
@@ -204,5 +204,16 @@
 
     <select id="queryResltWithMap" resultType="java.util.Map">
         SELECT `name`,SUM(age) AS agecount,COUNT(1) AS idcount FROM `my_batis_user`  group by `name`
+    </select>
+
+    <select id="queryPageByName" resultType="com.adolesce.cloud.dubbo.domain.db.BatisUser">
+        SELECT `user`.*,record.card_no FROM my_batis_user `user`
+                                                INNER JOIN my_member_record record ON `user`.`name` = record.`client_name`
+        WHERE `user`.name LIKE CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="queryByNameAndAge" resultType="com.adolesce.cloud.dubbo.domain.db.BatisUser">
+        SELECT `user`.* FROM my_batis_user `user`
+        WHERE `user`.name LIKE CONCAT('%',#{paramMapper.name},'%') and `user`.age = #{age}
     </select>
 </mapper>

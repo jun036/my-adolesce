@@ -38,7 +38,7 @@ public class Swagger2Config {
 
     private ApiInfo buildApiInfo() {
         return new ApiInfoBuilder()
-                .title("我的青春")
+                .title("【我的青春】项目接口文档")
                 .version("1.0")
                 .description("Swagger使用演示接口文档")
                 .termsOfServiceUrl("http://blog.csdn.net/myservice网址链接")

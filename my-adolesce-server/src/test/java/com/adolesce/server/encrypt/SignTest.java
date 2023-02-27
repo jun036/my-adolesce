@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
  */
 public class SignTest {
 
+    //1、前端给后端传参    前端  ====》 后端
+    //2、我们给第三方接口传参    我们后端  ====》  第三方
+
     /**
      * 生成接口sign验签参数
      */

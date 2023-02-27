@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
@@ -80,6 +81,7 @@ public class HeiMaStudentMsgServiceImpl extends ServiceImpl<HeiMaStudentMsgMappe
     }
 
     @Override
+    @Transactional
     public void saveStudentMsg(HeiMaStudentMsgDto studentMsgDto) throws ParseException {
         if(ObjectUtil.isNotEmpty(studentMsgDto)){
             //新增

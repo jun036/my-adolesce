@@ -19,7 +19,7 @@ public class Ticket implements Runnable {
         while (true) {
             synchronized (ticket) {
                 if (ticket > 0) {
-                    System.out.println(Thread.currentThread().getName() + "在卖第" + (100 - (--ticket)) + "张票 " + tl);
+                    System.out.println(Thread.currentThread().getName() + "now sale:" + (100 - (--ticket)) + "ticket" + tl);
                 }
             }
             try {

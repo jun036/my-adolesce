@@ -8,9 +8,14 @@ import com.adolesce.common.entity.course.Lesson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -116,7 +121,7 @@ public class SomeTest {
     }
 
     @Test
-    public void test(){
+    public void test() {
         String v1 = "aaaaaaaaaaaa";
 
         String v2 = "aaaaaaaaaaaa";
@@ -139,7 +144,7 @@ public class SomeTest {
 
     @Test
     public void testTryFinally1() {
-       System.out.println("return :" + testReturn1());
+        System.out.println("return :" + testReturn5());
     }
 
     private int testReturn5() {
@@ -180,7 +185,7 @@ public class SomeTest {
     private int testReturn3() {
         int i = -2;
         try {
-            i++;
+            i = i++ * ++i;
             System.out.println("try:" + i);
             return i++ / --i;
         } catch (Exception e) {
@@ -251,6 +256,7 @@ public class SomeTest {
         System.out.println(s1 + "");
         System.out.println(s2);
         System.out.println(s1.equals(s2));
+        System.out.println(s1 == s2);
         System.out.println((Boolean) null);
     }
 
@@ -419,8 +425,8 @@ public class SomeTest {
             while (true) {
                 for (int i = 1; i < 50; i++) {
                     System.out.println(i);
-                    if(i%5 == 0){
-                        int y = i/0;
+                    if (i % 5 == 0) {
+                        int y = i / 0;
                     }
                 }
             }
@@ -430,7 +436,7 @@ public class SomeTest {
         } finally {
             try {
                 System.out.println("我是finally，需要执行");
-            }finally {
+            } finally {
 
             }
         }
@@ -438,6 +444,7 @@ public class SomeTest {
 
     /**
      * 69期唐豪公司需求
+     *
      * @throws ParseException
      */
     @Test
@@ -445,18 +452,18 @@ public class SomeTest {
         String beginDateStr = "2022-11-09";
         String endDateStr = "2022-12-20";
         //1、获取时间区间集合
-        List<String> dateList = getDateList(beginDateStr,endDateStr);
+        List<String> dateList = getDateList(beginDateStr, endDateStr);
 
         //2、准备数据：构建日期Map集合（也可以用实体封装）
         List<Map> dateMapList = new ArrayList<>();
         Random random = new Random();
         dateList.forEach(dateStr -> {
             HashMap dateMap = new HashMap();
-            dateMap.put("date",dateStr);
-            dateMap.put("weekOfMonth",dateStr.substring(0,dateStr.lastIndexOf("-")+1) +
-                    DateUtil.weekOfMonth(DateUtil.parseDate(dateStr))+"周");
+            dateMap.put("date", dateStr);
+            dateMap.put("weekOfMonth", dateStr.substring(0, dateStr.lastIndexOf("-") + 1) +
+                    DateUtil.weekOfMonth(DateUtil.parseDate(dateStr)) + "周");
             //此处的条数应该从数据库查询，目前用随机数代替
-            dateMap.put("count",random.nextInt(20));
+            dateMap.put("count", random.nextInt(20));
             dateMapList.add(dateMap);
         });
         System.err.println("数据如下：");
@@ -464,26 +471,27 @@ public class SomeTest {
         dateMapList.stream().forEach(System.out::println);
 
         //3、统计数据
-        Map<String,Integer> resultMap = new TreeMap<>();
+        Map<String, Integer> resultMap = new TreeMap<>();
         String weekOfMonth = "";
         for (Map map : dateMapList) {
-            weekOfMonth = (String)map.get("weekOfMonth");
+            weekOfMonth = (String) map.get("weekOfMonth");
             Integer count = resultMap.get(weekOfMonth);
-            if(count != null){
-                resultMap.put(weekOfMonth,count + (Integer) map.get("count"));
-            }else{
-                resultMap.put(weekOfMonth,(Integer) map.get("count"));
+            if (count != null) {
+                resultMap.put(weekOfMonth, count + (Integer) map.get("count"));
+            } else {
+                resultMap.put(weekOfMonth, (Integer) map.get("count"));
             }
         }
         System.err.println("统计结果如下：");
         System.err.println("==================================");
-        resultMap.forEach((k,v) -> System.out.println(k + ":" +v));
+        resultMap.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 
     /**
      * 根据开始时间和结束时间获取范围内的日期集合
+     *
      * @param beginDateStr 开始日期
-     * @param endDateStr 结束日期
+     * @param endDateStr   结束日期
      * @return
      * @throws ParseException
      */
@@ -499,7 +507,7 @@ public class SomeTest {
     }
 
     @Test
-    public void test9(){
+    public void test9() {
         Map<String, Integer> hashMap = Maps.newHashMap();
         Map<String, Integer> treeMap = Maps.newTreeMap();
         Map<String, Integer> linkedHashMap = Maps.newLinkedHashMap();
@@ -519,25 +527,25 @@ public class SomeTest {
         map.put("2022-12-2周:54", 4);
         map.put("2022-12-3周:69", 4);
         map.put("2022-12-4周:24", 4);
-        map.forEach((k,v) -> System.out.println(k + ":" +v));
+        map.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 
     @Test
-    public void test10(){
+    public void test10() {
         int a = 2;
         Integer b = 2;
         User user = new User();
         user.setUserName("张三");
         user.setAge(18);
-        
-        test10_1(2,a,user);
+
+        test10_1(2, a, user);
         System.out.println(a);
         System.out.println(b);
         System.out.println(user);
-        
+
     }
 
-    private void test10_1(int a,Integer b,User user) {
+    private void test10_1(int a, Integer b, User user) {
         a = 3;
         b = new Integer(3);
         User user1 = new User();
@@ -547,20 +555,122 @@ public class SomeTest {
     }
 
     @Test
-    public void test11(){
+    public void test11() {
         System.out.println(2.0 - 1.1);
-        System.out.println((20.0-11.0)/10.0);
+        System.out.println((20.0 - 11.0) / 10.0);
         System.out.println(new BigDecimal(2.0).subtract(new BigDecimal(1.1)));
     }
 
     @Test
-    public void test12(){
+    public void test12() {
         Short num1 = Short.valueOf("1");
         Map map = new HashMap();
-        map.put("num1",num1);
+        map.put("num1", num1);
 
         Short num2 = (Short) map.get("num1");
         System.out.println(num2.equals(1));
         System.out.println(num2 == 1);
     }
+
+    @Test
+    public void test13() {
+        //0、初始化变量
+        int x = 0;
+        int y = 0;
+        String line;
+
+        //1、设定棋盘规格：2位数字棋盘
+        int qipanspec = 2;
+
+        //2、统计哪些角标为分割空格符
+        List<Integer> blankIndexs = new ArrayList<>();
+        int index = qipanspec;
+        while (index <= 1000) {
+            blankIndexs.add(index);
+            index = index + qipanspec + 1;
+        }
+
+        //3、读取本地棋盘文件
+        BufferedReader in = null;
+        try {
+            File fileInAll = new File("D:/qipan.txt");
+            in = new BufferedReader(new FileReader(fileInAll));
+            while (StringUtils.isNotBlank(line = in.readLine())) {
+                x++;
+                char[] charArray = line.toCharArray();
+                //3.1、将每一行空格分隔符位置的字符替换为@符号
+                for (Integer blankIndex : blankIndexs) {
+                    if (blankIndex > charArray.length - 1) {
+                        break;
+                    }
+                    charArray[blankIndex] = '@';
+                }
+                String tempStr = new String(charArray);
+                //3.2、根据@符分割字符串
+                String[] splitStrArray = tempStr.split("@");
+                for (int i = 0; i < splitStrArray.length; i++) {
+                    if (StringUtils.isBlank(splitStrArray[i])) {
+                        y = i + 1;
+                        System.out.println("该棋盘坐标：(" + x + "," + y + ")位置为空");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void test14() {
+        System.out.println("测试Math.round");
+        System.out.println(Math.round(3.4));
+        System.out.println(Math.round(3.5));
+        System.out.println(Math.round(-3.4));
+        System.out.println(Math.round(-3.5));
+        System.out.println(Math.round(-3.6));
+
+        System.out.println("测试Math.floor");
+        System.out.println(Math.floor(3.4));
+        System.out.println(Math.floor(3.5));
+        System.out.println(Math.floor(-3.4));
+        System.out.println(Math.floor(-3.5));
+
+        System.out.println("测试Math.ceil");
+        System.out.println(Math.ceil(3.4));
+        System.out.println(Math.ceil(3.5));
+        System.out.println(Math.ceil(-3.4));
+        System.out.println(Math.ceil(-3.5));
+    }
+
+    @Test
+    public void test15() {
+        int x = 5, y = 8;
+        System.out.println(x | y);
+    }
+
+    @Test
+    public void test16() {
+        System.out.println("A".hashCode() % 2);
+        System.out.println("B".hashCode() % 2);
+    }
+
+    @Test
+    public void test17() {
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+        System.out.println(list);
+        Iterator<String> iterator = list.iterator();
+        iterator.hasNext();
+    }
+
 }

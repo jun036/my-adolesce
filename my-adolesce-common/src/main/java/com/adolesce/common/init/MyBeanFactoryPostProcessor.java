@@ -28,6 +28,4 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ord
     public int getOrder() {
         return 1;
     }
-
-    //3.执行查询
 }

@@ -92,18 +92,18 @@ public class OssTemplate {
      * @param is       输入流
      * @return 文件网络URL
      */
-    public String uploadFile(String filePath, InputStream is) {
+    public String uploadFile(/*byte[] bytes*/String filePath, InputStream is) {
         this.createBucket();
         String fileUrl = null;
         OSS ossClient = this.createOssClient();
         try {
             //1、拼写文件路径
             String fileName = UUID.randomUUID().toString() + filePath.substring(filePath.lastIndexOf("."));
-            filePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date())
-                    + "/" + fileName;
+            filePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date()) + "/" + fileName;
 
             //2、上传文件至阿里云
             //PutObjectRequest putObjectRequest = new PutObjectRequest(properties.getBucketName(), filePath, is);
+            //PutObjectRequest putObjectRequest = new PutObjectRequest(properties.getBucketName(), filePath, new ByteArrayInputStream(bytes));
             PutObjectResult putObjectResult = ossClient.putObject(properties.getBucketName(), filePath, is, getExtracted(is, fileName));
             //3、手动方式拼接文件访问URL
             fileUrl = properties.getUrl() + "/" + filePath;
@@ -232,7 +232,7 @@ public class OssTemplate {
      * @return
      */
     public List<String> listFileName(String path) {
-        OSS ossClient = this.createOssClient();
+        //OSS ossClient = this.createOssClient();
         List<String> res = new ArrayList<>();
         try {
             // 构造ListObjectsRequest请求。

@@ -63,7 +63,7 @@
         <elasticsearch.version>7.14.0</elasticsearch.version>
         <dubbo.boot.version>2.7.8</dubbo.boot.version>
         <!--<swagger.version>2.9.2</swagger.version>--> <!--2.7.0-->
-        <knife4j.version>3.0.2</knife4j.version> <!--3.0.2-->
+        <knife4j.version>3.0.2</knife4j.version> <!--2.0.2-->
         <swagger.springfox.version>3.0.0</swagger.springfox.version> <!--3.0.2-->
         <kaptcha.version>2.3.2</kaptcha.version>
         <easyexcel.version>3.1.1</easyexcel.version> <!--2.2.11-->
@@ -378,11 +378,41 @@
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>3.0.8</version>
-                <type>pom</type>
+            </dependency>-->
+
+
+            <!--阿里云核心API-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>4.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>2.0.23</version>
+            </dependency>
+            <!--阿里云oss存储API-->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>3.16.1</version>
+            </dependency>
+            <!--阿里云内容审核-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-green</artifactId>
+                <version>3.6.6</version>
+            </dependency>
+            <!--阿里云视觉智能开放平台检测-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>imageaudit20191230</artifactId>
+                <version>2.0.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

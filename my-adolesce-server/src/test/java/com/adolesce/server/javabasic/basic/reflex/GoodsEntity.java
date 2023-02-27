@@ -1,4 +1,4 @@
-package com.adolesce.server.javabasic.hmtest.reflex;
+package com.adolesce.server.javabasic.basic.reflex;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

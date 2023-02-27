@@ -275,6 +275,14 @@ public class MybatisTest {
         }
         System.err.println("-----------------------------------");
         addresses.forEach((k,v) -> System.out.println(k +":" +v));*/
+    }
 
+    @Test
+    public void testWithManyParams(){
+        Map map = new HashMap();
+        map.put("name","曹操");
+
+        List<BatisUser> batisUsers = this.usersMapper.queryByNameAndAge(map,33);
+        System.out.println(batisUsers);
     }
 }
