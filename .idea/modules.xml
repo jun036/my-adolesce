@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce.iml" filepath="$PROJECT_DIR$/my-adolesce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-autoconfig/my-adolesce-autoconfig.iml" filepath="$PROJECT_DIR$/my-adolesce-autoconfig/my-adolesce-autoconfig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-consumer/my-adolesce-cloud-dubbo-consumer.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-consumer/my-adolesce-cloud-dubbo-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-db/my-adolesce-cloud-dubbo-db.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-db/my-adolesce-cloud-dubbo-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-es/my-adolesce-cloud-dubbo-es.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-es/my-adolesce-cloud-dubbo-es.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-interface/my-adolesce-cloud-dubbo-interface.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-interface/my-adolesce-cloud-dubbo-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-mongo/my-adolesce-cloud-dubbo-mongo.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-mongo/my-adolesce-cloud-dubbo-mongo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-provider/my-adolesce-cloud-dubbo-provider.iml" filepath="$PROJECT_DIR$/my-adolesce-cloud-dubbo/my-adolesce-cloud-dubbo-provider/my-adolesce-cloud-dubbo-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-common/my-adolesce-common.iml" filepath="$PROJECT_DIR$/my-adolesce-common/my-adolesce-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul.iml" filepath="$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul-consumer/my-adolesce-consul-consumer.iml" filepath="$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul-consumer/my-adolesce-consul-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul-provider/my-adolesce-consul-provider.iml" filepath="$PROJECT_DIR$/my-adolesce-consul/my-adolesce-consul-provider/my-adolesce-consul-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo.iml" filepath="$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-consumer/my-adolesce-dubbo-consumer.iml" filepath="$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-consumer/my-adolesce-dubbo-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-interface/my-adolesce-dubbo-interface.iml" filepath="$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-interface/my-adolesce-dubbo-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-provider/my-adolesce-dubbo-provider.iml" filepath="$PROJECT_DIR$/my-adolesce-dubbo/my-adolesce-dubbo-provider/my-adolesce-dubbo-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-consumer/my-adolesce-eureka-consumer.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-consumer/my-adolesce-eureka-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-provider/my-adolesce-eureka-provider.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-provider/my-adolesce-eureka-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-server/my-adolesce-eureka-server.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-server/my-adolesce-eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-server2/my-adolesce-eureka-server2.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-eureka-server2/my-adolesce-eureka-server2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-gateway/my-adolesce-gateway.iml" filepath="$PROJECT_DIR$/my-adolesce-gateway/my-adolesce-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-hystrix-monitor/my-adolesce-hystrix-monitor.iml" filepath="$PROJECT_DIR$/my-adolesce-eureka/my-adolesce-hystrix-monitor/my-adolesce-hystrix-monitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-mqconsumer/my-adolesce-mqconsumer.iml" filepath="$PROJECT_DIR$/my-adolesce-mqconsumer/my-adolesce-mqconsumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos.iml" filepath="$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-consumer/my-adolesce-nacos-consumer.iml" filepath="$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-consumer/my-adolesce-nacos-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-feign-api/my-adolesce-nacos-feign-api.iml" filepath="$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-feign-api/my-adolesce-nacos-feign-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-provider/my-adolesce-nacos-provider.iml" filepath="$PROJECT_DIR$/my-adolesce-nacos/my-adolesce-nacos-provider/my-adolesce-nacos-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-adolesce-server/my-adolesce-server.iml" filepath="$PROJECT_DIR$/my-adolesce-server/my-adolesce-server.iml" />
+    </modules>
+  </component>
+</project>

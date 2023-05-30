@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="my-adolesce-dubbo-interface" />
+        <module name="my-adolesce-mqconsumer" />
+        <module name="my-adolesce-cloud-dubbo-db" />
+        <module name="my-adolesce-autoconfig" />
+        <module name="my-adolesce-consul-consumer" />
+        <module name="my-adolesce-gateway" />
+        <module name="my-adolesce-nacos-feign-api" />
+        <module name="my-adolesce-consul-provider" />
+        <module name="my-adolesce-server" />
+        <module name="my-adolesce-eureka-consumer" />
+        <module name="my-adolesce-hystrix-monitor" />
+        <module name="my-adolesce-nacos-provider" />
+        <module name="my-adolesce-dubbo-consumer" />
+        <module name="my-adolesce-cloud-dubbo-interface" />
+        <module name="my-adolesce-eureka-server" />
+        <module name="my-adolesce-eureka-server2" />
+        <module name="my-adolesce-cloud-dubbo-es" />
+        <module name="my-adolesce-cloud-dubbo-provider" />
+        <module name="my-adolesce-dubbo-provider" />
+        <module name="my-adolesce-common" />
+        <module name="my-adolesce-eureka-provider" />
+        <module name="my-adolesce-nacos-consumer" />
+        <module name="my-adolesce-cloud-dubbo-consumer" />
+        <module name="my-adolesce-cloud-dubbo-mongo" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="my-adolesce" target="1.8" />
+      <module name="my-adolesce-autoconfig" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-consumer" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-db" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-es" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-interface" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-mongo" target="1.8" />
+      <module name="my-adolesce-cloud-dubbo-provider" target="1.8" />
+      <module name="my-adolesce-common" target="1.8" />
+      <module name="my-adolesce-consul" target="1.8" />
+      <module name="my-adolesce-consul-consumer" target="1.8" />
+      <module name="my-adolesce-consul-provider" target="1.8" />
+      <module name="my-adolesce-dubbo" target="1.8" />
+      <module name="my-adolesce-dubbo-consumer" target="1.8" />
+      <module name="my-adolesce-dubbo-interface" target="1.8" />
+      <module name="my-adolesce-dubbo-provider" target="1.8" />
+      <module name="my-adolesce-eureka" target="1.8" />
+      <module name="my-adolesce-eureka-consumer" target="1.8" />
+      <module name="my-adolesce-eureka-provider" target="1.8" />
+      <module name="my-adolesce-eureka-server" target="1.8" />
+      <module name="my-adolesce-eureka-server2" target="1.8" />
+      <module name="my-adolesce-gateway" target="1.8" />
+      <module name="my-adolesce-hystrix-monitor" target="1.8" />
+      <module name="my-adolesce-mqconsumer" target="1.8" />
+      <module name="my-adolesce-nacos" target="1.8" />
+      <module name="my-adolesce-nacos-consumer" target="1.8" />
+      <module name="my-adolesce-nacos-feign-api" target="1.8" />
+      <module name="my-adolesce-nacos-provider" target="1.8" />
+      <module name="my-adolesce-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="my-adolesce-autoconfig" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-consumer" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-db" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-es" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-interface" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-mongo" options="-parameters" />
+      <module name="my-adolesce-cloud-dubbo-provider" options="-parameters" />
+      <module name="my-adolesce-common" options="-parameters" />
+      <module name="my-adolesce-consul-consumer" options="-parameters" />
+      <module name="my-adolesce-consul-provider" options="-parameters" />
+      <module name="my-adolesce-dubbo-consumer" options="-parameters" />
+      <module name="my-adolesce-dubbo-interface" options="-parameters" />
+      <module name="my-adolesce-dubbo-provider" options="-parameters" />
+      <module name="my-adolesce-eureka-consumer" options="-parameters" />
+      <module name="my-adolesce-eureka-provider" options="-parameters" />
+      <module name="my-adolesce-eureka-server" options="-parameters" />
+      <module name="my-adolesce-eureka-server2" options="-parameters" />
+      <module name="my-adolesce-gateway" options="-parameters" />
+      <module name="my-adolesce-hystrix-monitor" options="-parameters" />
+      <module name="my-adolesce-mqconsumer" options="-parameters" />
+      <module name="my-adolesce-nacos-consumer" options="-parameters" />
+      <module name="my-adolesce-nacos-feign-api" options="-parameters" />
+      <module name="my-adolesce-nacos-provider" options="-parameters" />
+      <module name="my-adolesce-server" options="-parameters" />
+    </option>
+  </component>
+</project>

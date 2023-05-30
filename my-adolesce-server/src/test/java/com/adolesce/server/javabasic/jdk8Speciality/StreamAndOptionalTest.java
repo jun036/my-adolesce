@@ -2,7 +2,6 @@ package com.adolesce.server.javabasic.jdk8Speciality;
 
 import com.adolesce.common.entity.User;
 import org.junit.Test;
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -59,20 +58,21 @@ public class StreamAndOptionalTest {
     public void testStreamOperation1() {
         List<String> strs = Arrays.asList("abc", "", "ab", "bc", "efg", "ab", "jkl", "abcd", "", "jkl", "eopdkl");
         System.out.println("列表: " + strs);
+        // 列表: [abc, , ab, bc, efg, ab, jkl, abcd, , jkl, eopdkl]
         System.out.println("--------------------------------");
 
         // 1、filter(Predicate d) 接受一个断言型函数，对Stream流中的元素进行处理，过滤掉不满足条件的元素
         long count = strs.stream().filter(a -> a.isEmpty()).count();
-        System.out.println("空字符串数量为: " + count);
+        System.out.println("空字符串数量为: " + count); // 空字符串数量为: 2
 
         count = strs.stream().filter(str -> str.length() == 3).count();
-        System.out.println("字符串长度为 3 的数量为: " + count);
+        System.out.println("字符串长度为 3 的数量为: " + count); // 字符串长度为 3 的数量为: 4
 
         List<String> filteredStrs = strs.stream().filter(str -> !str.isEmpty()).collect(Collectors.toList());
-        System.out.println("非空筛选后的列表: " + filteredStrs);
+        System.out.println("非空筛选后的列表: " + filteredStrs); // 非空筛选后的列表: [abc, ab, bc, efg, ab, jkl, abcd, jkl, eopdkl]
 
-        String mergedStrs = strs.stream().collect(Collectors.joining(", "));
-        System.out.println("非空字符串逗号拼接: " + mergedStrs);
+        String mergedStrs = strs.stream().filter(str -> !str.isEmpty()).collect(Collectors.joining(", "));
+        System.out.println("非空字符串逗号拼接: " + mergedStrs); // 非空字符串逗号拼接: abc, ab, bc, efg, ab, jkl, abcd, jkl, eopdkl
 
         //2、distinct 筛选元素，通过Stream元素中的hasCode和equals方法来去除重复元素
         List<String> distinctStrs = strs.stream().distinct().collect(Collectors.toList());

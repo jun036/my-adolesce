@@ -1,0 +1,195 @@
+spring:
+  thymeleaf:
+    cache: false  #关闭模板缓存，方便测试
+    prefix: classpath:/templates/
+    encoding: UTF-8
+    mode: HTML5
+    servlet:
+      content-type: text/html
+    #suffix: .html
+  freemarker:
+    cache: false  #关闭模板缓存，方便测试
+    settings:
+      template_update_delay: 0 #检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试
+    #suffix: .html               #指定Freemarker模板文件的后缀名
+    template-loader-path: classpath:/templates
+  mail:
+    host: smtp.163.com  #发送方SMTP服务器主机，如果是QQ邮箱：smtp.qq.com
+    username: liuweidong0008@163.com # 发件人邮箱
+    password:    #开通SMTP功能(授权码，而不是登录密码)
+    default-encoding: UTF-8 #默认MimeMessage编码
+    test-connection: false  #是否在启动时测试邮件服务器是否可用
+    properties:
+      mail:
+        debug: true
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory #配饰 SSL 加密工厂
+          ssl:
+            enable: true #是否开启SSL访问邮件服务器
+  #Rabbitmq配置
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: lwd
+    password: lwd
+    publisher-confirm-type: correlated  #开启confirm机制：消息投递到交换机回调(- `simple`：同步等待confirm结果，直到超时 - `correlated`：异步回调，定义ConfirmCallback，MQ返回结果时会回调这个ConfirmCallback)
+    publisher-returns: true #开启returns 机制：消息从交换机路由到队列回调（同样是基于callback机制，不过是定义ReturnCallback）
+    template:
+      mandatory: true # 定义消息路由失败时的策略。true，则调用ReturnCallback；false：则直接丢弃消息
+  #Redis配置
+  redis:
+    database: 0      #数据库索引（默认为0）
+    host: 127.0.0.1  #服务器地址
+    port: 6379       #服务器连接端口(默认)
+    password: lwd    #服务器连接密码 (默认为空 没有不填)
+    timeout: 10s     #连接超时时间（秒）
+    jedis:
+      pool:
+        max-active: 500       #连接池最大连接数（使用负值表示没有限制）默认 8
+        max-wait: 10000ms        #连接池最大阻塞等待时间（使用负值表示没有限制）默认 -1
+        max-idle: 100         #连接池中的最大空闲连接 默认 8
+        min-idle: 0           #连接池中的最小空闲连接 默认 0
+  cloud:
+    #Consul注册中心配置
+    consul:
+      host: localhost #consul 服务端的 ip
+      port: 8500    #consul 服务端的端口 默认8500
+      discovery:
+        service-name: ${spring.application.name} # 当前应用注册到consul的名称
+        prefer-ip-address: true # 是否以ip形式注册
+        ip-address: 127.0.0.1 # 设置当前实例的ip
+    #Nacos注册中心配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # 配置nacos 服务端地址
+        cluster-name: HZ # 集群名称（Nacos分级存储模型 服务->集群->实例，同级群优先，集群内随机，同级群都挂了再访问别的集群，但会报警告）
+#结合Nacos注册中心的Dubbo配置
+dubbo:
+  registry:
+    address: spring-cloud://localhost  #使用springcloud中注册中心的地址
+  consumer:
+    check: false
+#Eureka客户端相关配置
+eureka:
+  instance:
+    hostname: localhost # 主机名
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka-server/eureka # eureka服务端地址，将来客户端使用该地址和eureka进行通信
+      #defaultZone: http://eureka-server:8761/eureka-server/eureka,http://eureka-server2:8762/eureka-server2/eureka  #eureka注册中心集群模式
+#RocketMQ相关配置
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: adolesce-group
+    send-message-timeout: 50000  #消息发送超时时长
+
+
+#通过配置的方式设置Ribbon的负载均衡策略（为某个服务单独进行ribbon参数设置）
+#EUREKA-PROVIDER:  #为哪个服务设置负载均衡策略（服务应用名称）
+#  ribbon:
+#    NFloadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule  #指定负载均衡策略类
+
+# 设置Feign 的超时时间
+ribbon: #全局ribbon的参数设置
+  ConnectTimeout: 1000 # 连接超时时间 默认1s
+  ReadTimeout: 1000 # 逻辑处理的超时时间,即通信超时时间 默认1s
+  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 2 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  eager-load:  #为某个服务开启饥饿加载（在项目启动时就会初始化LoadBalancer，默认是懒加载，即第一次访问时才会去创建LoadBalanceClient，请求时间会很长）
+    enabled: true
+    clients:
+      - nacos-provider
+
+# OkToRetryOnAllOperations: false  #是否所有操作都重试（如果是get还可以，如果是post,put等操作没有实现幂等的情况下是很危险的，所以设置为false）
+#注意：
+#1、ribbon默认重试次数为1次，一共调用服务2次，如果还未成功则抛出异常，如果开启了feign对hystrix（feign.hystrix.enabled = true）支持，
+# 且未设置Hystrix超时时间则超时时间默认1秒，1秒后直接服务降级不进行重试，一共调用服务1次
+#2、如果配置了MaxAutoRetries和MaxAutoRetriesNextServer属性，则次数为（MaxAutoRetries+1）*（MaxAutoRetriesNextServer+1）,
+# 重试次数全部完成后抛Read timed out异常 等同(1 + MaxAutoRetries+MaxAutoRetriesNextServer+(MaxAutoRetries * MaxAutoRetriesNextServer)
+#3、在上面基础上如果开启了feign对hystrix的支持，则重试过程中到达Hystrix超时时间直接进入服务降级，后台继续重试（没有意义了），重试次数全部跑完后抛出Read timed out异常
+#4、Feign默认支持Ribbon；Ribbon的重试机制和Feign的重试机制有冲突，所以源码中默认关闭Feign的重试机制,使用Ribbon的重试机制
+#5、默认情况下,GET方式请求无论是连接异常还是读取异常,都会进行重试，非GET方式请求,只有连接异常时,才会进行重试
+
+# 设置当前的日志级别为 debug，feign只支持记录debug级别的日志
+logging:
+  level:
+    com.adolesce: debug
+  pattern:
+    dateformat: HH:mm:ss:SSS
+
+# 开启feign对hystrix的支持（客户端服务降级/熔断等）
+feign:
+  hystrix:
+    enabled: true
+#  client:    #坑：开启全局配置会使ribbon超时配置失效
+#    config:
+#      default: #这里用default就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+#        loggerLevel: Full #日志级别（第二种配置方式，第一种是通过代码配置）
+
+# 设置Hystrix超时时间（到达该时间服务提供方仍未响应，则走服务降级逻辑）【合理的时间应该设置为 重试次数*ribbon.ReadTimeout，以保证ribbon重试次数都能够执行完】
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 7000
+
+sms:
+  huyi:
+    url: http://106.ihuyi.com/webservice/sms.php?method=Submit
+    account: C61078084
+    password:
+  yimei:
+    singleUrl: http://shmtn.b2m.cn/inter/sendSingleSMS
+    batchUrl: http://shmtn.b2m.cn/inter/sendBatchOnlySMS
+    appId: EUCP-EMY-SMS1-391UA
+    secretKey:
+    signName: 【美团】
+#    appId: EUCP-EMY-SMS1-1IOG0
+#    secretKey: 366FC3E3AC0F03CE
+#    signName: 【饿了么】
+
+aliyun:
+  content-security:
+    green:
+      enable: true
+      accessKeyID:
+      accessKeySecret:
+      scenes: porn,terrorism #色情，暴力
+    vision:
+      enable: true
+      accessKeyId:
+      accessKeySecret:
+      endpoint: imageaudit.cn-shanghai.aliyuncs.com
+      txtLabels: spam,politics,abuse,terrorism,porn,flood,contraband,ad
+      imgScenes: porn,terrorism,ad,live,logo
+  oss:
+    accessKey:
+    secret:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    bucketName: liuweidong-bucket
+    url: https://${aliyun.oss.bucketName}.oss-cn-beijing.aliyuncs.com
+
+minio:
+  accessKey: minioadmin
+  secretKey: minioadmin
+  endpoint: http://localhost:9000
+
+adolesce:
+  jwt:  # jwt秘钥
+    secret: 76bd425b6f29f7fcc2e0bfc286043df1
+  captcha: #图形验证码
+    type: penggle.math
+  excludUrlStrs: /excel/export1,/excel/export2,/excel/export3
+  excludUrls:
+    - /excel/export4
+    - /excel/export5
+    - /excel/export6
+
+#demo:
+#  one: dev-yml-1
+#  two: dev-yml-2
+#  three: dev-yml-3
